@@ -1,3 +1,4 @@
-<h1><center>Рабочий файл - Noname.py</center></h1>
-<h1><center>Потраченное время на проект - Timer/time.txt</center></h1>
-<h3>Загрузка..</h3>
+<h1><center>Рабочий файл - Noname.py</center></h1><h3><center>Потраченное время на проект:</center><center><pre>﻿Дней	0
+Часов	5
+Минут	23
+Секунд	14</pre></center></h3>
