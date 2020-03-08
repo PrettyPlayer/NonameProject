@@ -34,6 +34,9 @@ def save(time):
 	f = open("time.txt", "w", encoding="utf-8")
 	f.write(time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])))
 	f.close()
+	f = open("..\\README.md", "w", encoding="utf-8")
+	f.write("<h1><center>Рабочий файл - Noname.py</center></h1><h1><center>Потраченное время на проект:</center></h1><h3><center><pre>" + time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])) + "</pre></center></h3>")
+	f.close()
 
 class Button(pygame.sprite.Sprite):
 	def __init__(self, x, y, size, filename, text, font, sizetext, color):
@@ -144,7 +147,7 @@ while True:
 				if event.key == pygame.K_ESCAPE:
 					save(time)
 					quit()
-					sys.exit()
+					save(time)
 	start(time)
 	pygame.display.update()
 	clock.tick(FPS)
