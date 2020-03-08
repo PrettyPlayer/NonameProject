@@ -31,7 +31,7 @@ def start(time):
 			time[1][1]=0
 
 def save(time):
-	f = open("time.txt", "w")
+	f = open("time.txt", "w", encoding="utf-8")
 	f.write(time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])))
 	f.close()
 
@@ -63,7 +63,7 @@ class Text(pygame.sprite.Sprite):
 		self.place = self.text.get_rect(topleft=(x, y))
 
 try:
-	f = open("time.txt", "r")
+	f = open("time.txt", "r", encoding="utf-8")
 	time = f.read().split("\n")
 	f.close()
 	for i in range(0, len(time)):
@@ -74,9 +74,9 @@ except:
 		f = open("time.txt", "x")
 	except:
 		pass
-	f = open("time.txt", "w")
+	f = open("time.txt", "w", encoding="utf-8")
 	f.write("Дней\t00\nЧасов\t00\nМинут\t00\nСекунд\t00")
-	f = open("time.txt", "r")
+	f = open("time.txt", "r", encoding="utf-8")
 	time = f.read().split("\n")
 	f.close()
 	for i in range(0, len(time)):
