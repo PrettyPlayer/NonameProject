@@ -3,7 +3,7 @@ import pygame
 from random import randint
 
 #Параметры
-FPS = 10
+FPS = 1
 WIDTH = 200
 HEIGHT = 400
 fullscreen = 1
@@ -29,7 +29,34 @@ def start(time):
 		if time[1][1]==24:
 			time[0][1]+=1
 			time[1][1]=0
-
+		#Смена секунд
+		if time[3][1]%10==0 or 5<=time[3][1]%10<=9 or 11<=time[3][1]<=14:
+			time[3][0]="Секунд"
+		elif time[3][1]%10==1:
+			time[3][0]="Секунда"
+		elif 2<=time[3][1]%10<=4:
+			time[3][0]="Секунды"
+		#Смена минут
+		if time[2][1]%10==0 or 5<=time[2][1]%10<=9 or 11<=time[2][1]<=14:
+			time[2][0]="Минут"
+		elif time[2][1]%10==1:
+			time[2][0]="Минута"
+		elif 2<=time[2][1]%10<=4:
+			time[2][0]="Минуты"
+		#Смена часов
+		if time[1][1]%10==0 or 5<=time[1][1]<=20:
+			time[1][0]="Часов"
+		elif time[1][1]%10==1:
+			time[1][0]="Час"
+		elif 2<=time[1][1]%10<=4:
+			time[1][0]="Часа"
+		#Смена дней
+		if time[0][1]%10==0 or 5<=time[0][1]<=20:
+			time[0][0]="Дней"
+		elif time[0][1]%10==1:
+			time[0][0]="День"
+		elif 2<=time[0][1]%10<=4:
+			time[0][0]="Дня"
 def save(time):
 	f = open("time.txt", "w", encoding="utf-8")
 	f.write(time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])))
