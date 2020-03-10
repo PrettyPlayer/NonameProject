@@ -1,9 +1,10 @@
 from game.window import *
 
+width = 1920
+height = 1080
+
 class InitGame():
 	def __init__(self):
-		self.WIDTH = 1920
-		self.HEIGHT = 1080
 		self.fullscreen = 0
 		self.visiblemouse = True
 		self.rungame = True
@@ -21,9 +22,9 @@ class InitGame():
 		pygame.init()
 		pygame.display.set_icon(pygame.image.load(os.path.realpath("img\\2.png")))
 		if self.fullscreen == 0:
-			self.surf_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+			self.surf_main = pygame.display.set_mode((width, height))
 		elif self.fullscreen == 1:
-			self.surf_main = pygame.display.set_mode((self.WIDTH, self.HEIGHT), pygame.FULLSCREEN)
+			self.surf_main = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 		pygame.display.set_caption("Noname")
 	def setvisisblemouse(self):
 		pygame.mouse.set_visible(self.visiblemouse)
