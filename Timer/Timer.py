@@ -1,6 +1,5 @@
 import os
 import pygame
-from random import randint
 
 #Параметры
 FPS = 1
@@ -157,7 +156,6 @@ while True:
 	for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				save(time)
-				quit()
 				sys.exit()
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if 0<event.pos[0]<100 and 250<event.pos[1]<350:
@@ -173,8 +171,7 @@ while True:
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					save(time)
-					quit()
-					save(time)
+					sys.exit()
 	start(time)
 	pygame.display.update()
 	clock.tick(FPS)
