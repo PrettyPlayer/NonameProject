@@ -1,4 +1,4 @@
 <h1><center>Рабочий файл - Noname.py</center></h1><h3><center>Потраченное время на проект:</center><center><pre>Дней	0
-Часов	6
-Минуты	24
-Секунд	35</pre></center></h3>
+Часов	9
+Минут	0
+Секунды	3</pre></center></h3>
