@@ -34,13 +34,13 @@ class InitGame():
 class ManageGame():
 	def __init__(self):
 		self.scene = 0
-		self.gamewindow = GameWindow(60)
-		self.menuwindow = MenuWindow(60)
+		self.gamewindow = GameWindow()
+		self.menuwindow = MenuWindow()
 	def update(self):
 		if self.scene == 0:
-			self.menuwindow.start()
+			self.menuwindow.start(60)
 		elif self.scene == 1:
-			self.gamewindow.start()
+			self.gamewindow.start(60)
 
 if __name__ == "__main__":
 	thegame = InitGame()

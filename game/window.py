@@ -3,17 +3,16 @@ import pygame
 from random import randint
 
 class Window():
-	def __init__(self, FPS):
-		self.FPS = FPS
-		self.flag = False
-	def start(self):
+	def __init__(self):
+		self.run = True
+	def start(self, FPS):
 		self.clock = pygame.time.Clock()
 		self.preinit()
-		while True:
+		while self.run:
 			self.postinit()
 			self.exit()
 			pygame.display.update()
-			self.clock.tick(self.FPS)
+			self.clock.tick(FPS)
 	def exit(self):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
