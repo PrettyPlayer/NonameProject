@@ -1,6 +1,4 @@
-import os
-import pygame
-from random import randint
+from game.window import *
 
 class InitGame():
 	def __init__(self):
@@ -32,50 +30,16 @@ class InitGame():
 	def initstart(self):
 		while self.rungame:
 			self.managegame.update()
-		quit()
-		sys.exit()
-
-class Window():
-	def __init__(self, FPS):
-		self.run = True
-		self.FPS = FPS
-	def start(self):
-		self.clock = pygame.time.Clock()
-		self.preinit()
-		while self.run:
-			self.postinit()
-			self.exit()
-			pygame.display.update()
-			self.clock.tick(self.FPS)
-	def exit(self):
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				thegame.managegame.scene = 0
-				self.run = False
-
-class MenuWindow(Window):
-	def preinit(self):
-		pass
-	def postinit(self):
-		pass
-
-class GameWindow(Window):
-	def preinit(self):
-		pass
-	def postinit(self):
-		pass
 
 class ManageGame():
 	def __init__(self):
-		self.scene = 1
+		self.scene = 0
 		self.gamewindow = GameWindow(60)
 		self.menuwindow = MenuWindow(60)
 	def update(self):
 		if self.scene == 0:
-			thegame.rungame = False
-		elif self.scene == 1:
 			self.menuwindow.start()
-		elif self.scene == 2:
+		elif self.scene == 1:
 			self.gamewindow.start()
 
 if __name__ == "__main__":
