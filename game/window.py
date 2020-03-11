@@ -34,15 +34,15 @@ class MenuWindow(Window):
 		self.backgroundmenupapichimage = Image()
 		self.backgroundmenublackimage = Image()
 		
-		self.snowanimation = Animation(29)
+		self.snowanimation = Animation("img\\snow\\", 29)
+		self.snowanimation.loadall(960, 540)
 		
 		self.backgroundmenuimage.createcenterimage("img\\backgroundmenu\\", "backgroundmenuimage", 960, 540)
 		self.backgroundmenupapichimage.createbottomleftimage("img\\backgroundmenu\\", "backgroundmenupapich", 160, 1080)
 		self.backgroundmenublackimage.createcenterimage("img\\backgroundmenu\\", "backgroundmenublack", 960, 540)
 	def postinit(self):
-		self.snowanimation.update("img\\snow\\", 2)
 		self.backgroundmenuimage.show()
-		self.snowanimation.show()
+		self.snowanimation.update(1)
 		self.backgroundmenupapichimage.show()
 		self.backgroundmenublackimage.show()
 
@@ -83,10 +83,25 @@ class Image(pygame.sprite.Sprite):
 		return(round(sizey*height/1080))
 
 class Animation(Image):
-	def __init__(self, num):
+	def __init__(self, path, num):
 		self.currenttime=0
 		self.currentnum=1
 		self.maxnum=num
+		self.list={}
+		self.path=path
+	def get(self, posx, posy, sizex=1, sizey=1):
+		self.posx = posx
+		self.posy = posy
+		self.sizex = sizex
+		self.sizey = sizey
+	def genlist(self):
+		self.list={x: 5 for x in range(1, self.maxnum+1)}
+	def loadall(self, posx, posy, sizex=1, sizey=1):
+		self.get(posx, posy, sizex=1, sizey=1)
+		self.genlist()
+		for i in range(1, self.maxnum+1):
+			self.list[i] = Image()
+			self.list[i].createcenterimage(self.path, i, self.posx, self.posy, self.sizex, self.sizey)
 	def updatenum(self):
 		if 0<self.currentnum<self.maxnum:
 			self.currentnum+=1
@@ -96,9 +111,9 @@ class Animation(Image):
 			print("Error updatenum()")
 	def updatetime(self):
 		self.currenttime+=1
-	def update(self, path, speed):
+	def update(self, speed):
 		if self.currenttime%self.changespeed(speed) == 0:
-			self.createcenterimage(path, self.currentnum, 960, 540)
+			self.list[self.currentnum].show()
 			self.updatenum()
 		self.updatetime()
 	def changespeed(self, speed):
