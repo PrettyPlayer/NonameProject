@@ -61,7 +61,7 @@ def save(time):
 	f.write(time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])))
 	f.close()
 	f = open("..\\README.md", "w", encoding="utf-8")
-	f.write("<h1><center>Рабочий файл - Noname.py</center></h1><h3><center>Потраченное время на проект:</center><center><pre>" + time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])) + "</pre></center></h3>")
+	f.write("<h1><center>Рабочий файл - Noname.py</center></h1><h3><center>Потраченное время на проект:</center><center><pre>" + time[0][0] + "\t" + str(time[0][1]) + "\n" + time[1][0] + "\t" + str(time[1][1]) + "\n" + time[2][0] + "\t" + str(time[2][1]) + "\n" + time[3][0] + "\t" + str(round(time[3][1])) + "</pre></center></h3>" + """<h5><a href="https://youtu.be/EDKfhccHFAc">Кликабельный скриншот (видео)</a></h5><a style="float:right" href="https://youtu.be/EDKfhccHFAc" target="_blank">  <img alt="Papich Gameplay" src="https://img.youtube.com/vi/EDKfhccHFAc/maxresdefault.jpg" /></a>""")
 	f.close()
 
 class Button(pygame.sprite.Sprite):
