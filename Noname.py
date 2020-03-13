@@ -20,10 +20,7 @@ class InitGame():
 	def initwindow(self):
 		pygame.init()
 		pygame.display.set_icon(pygame.image.load(os.path.realpath("img\\papich\\2.png")))
-		if self.fullscreen == 0:
-			self.surf_main = pygame.display.set_mode((width, height))
-		elif self.fullscreen == 1:
-			self.surf_main = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+		self.fullscreenchange()
 		pygame.display.set_caption("Noname")
 	def setvisisblemouse(self):
 		pygame.mouse.set_visible(self.visiblemouse)
@@ -31,6 +28,11 @@ class InitGame():
 		self.managegame = ManageGame(copy)
 		while self.rungame:
 			self.managegame.update()
+	def fullscreenchange(self):
+		if self.fullscreen == 0:
+			self.surf_main = pygame.display.set_mode((width, height))
+		elif self.fullscreen == 1:
+			self.surf_main = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 
 class ManageGame():
 	def __init__(self, copy):
