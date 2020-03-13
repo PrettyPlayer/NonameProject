@@ -1,13 +1,15 @@
 import os, sys
 import pygame
 from random import randint
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from Noname import *
+
+from game.registry import *
+#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+#from Noname import *
 
 CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 
-class Window():
+class Window(object):
 	def __init__(self):
 		self.run = True
 	def start(self, Frames):

@@ -1,4 +1,5 @@
 from game.window import *
+from game.registry import *
 
 width = 1920
 height = 1080
@@ -18,7 +19,7 @@ if fullscreen == 0:
 elif fullscreen == 1:
 	surf_main = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 
-class ManageWindow():
+class ManageWindow(object):
 	def __init__(self):
 		self.gamewindow = GameWindow()
 		self.menuwindow = MenuWindow()
