@@ -8,10 +8,8 @@ CYAN = (0, 255, 255)
 BLACK = (0, 0, 0)
 
 class Window():
-	def __init__(self, copy):
+	def __init__(self):
 		self.run = True
-		global thegame
-		thegame = copy
 	def start(self, Frames):
 		global FPS
 		FPS = Frames
@@ -73,11 +71,11 @@ class MenuWindow(Window):
 				if event.key == pygame.K_ESCAPE:
 					pass
 				if event.key == pygame.K_RETURN:
-					if thegame.fullscreen == 0:
-						thegame.fullscreen = 1
-					elif thegame.fullscreen == 1:
-						thegame.fullscreen = 0
-					thegame.fullscreenchange()
+					if fullscreen == 0:
+						fullscreen = 1
+					elif fullscreen == 1:
+						fullscreen = 0
+					fullscreenchange()
 
 class GameWindow(Window):
 	def preinit(self):
@@ -121,7 +119,7 @@ class Image(pygame.sprite.Sprite):
 	def showimage(self, posx, posy, pos="center"):
 		self.pos=pos
 		self.createrectimage(posx, posy, self.pos)
-		thegame.surf_main.blit(self.image, self.rect)
+		surf_main.blit(self.image, self.rect)
 	def changex(self, x):
 		return(round(x/1920*width))
 	def changey(self, y):
@@ -147,7 +145,7 @@ class Text(Image):
 		self.textrect = self.text.get_rect(center=(self.changex(posx), self.changey(posy)))
 	def showtext(self, posx, posy):
 		self.createrecttext(posx, posy)
-		thegame.surf_main.blit(self.text, self.textrect)
+		surf_main.blit(self.text, self.textrect)
 
 class Button(Text):
 	def __init__(self, name):
@@ -167,9 +165,9 @@ class Button(Text):
 	def click(self, mousepos):
 		if self.rect[0] <= mousepos[0] <= self.rect[0]+self.rect[2] and self.rect[1] <= mousepos[1] <= self.rect[1]+self.rect[3]:
 			if self.name == "start":
-				thegame.managegame.menuwindow.backgroundmusic.stop()
-				thegame.managegame.scene = 1
-				thegame.managegame.menuwindow.run = False
+				menuwindow.backgroundmusic.stop()
+				scene = 1
+				menuwindow.run = False
 			elif self.name == "settings":
 				pass
 			elif self.name == "exit":
