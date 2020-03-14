@@ -1,8 +1,8 @@
-class Registry(object):
-	def __init__(self):
-		self.registry = {}
-	def set(self, key, value):
-		self.registry[key] = value
-	def get(self, key):
-		if key in self.registry:
-			return self.registry[key]
+def setreg(key, value):
+	reg[key] = value
+
+def getreg(key):
+	if key in reg:
+		return reg[key]
+
+reg = {"fullscreen": 0, "visiblemouse": True, "rungame": True, "width": 1920, "height": 1080}
