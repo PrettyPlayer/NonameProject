@@ -1,9 +1,12 @@
-class Reg():
+class Registry():
+	def __init__(self):
+		self.reg = {"scene": 0, "visiblemouse": True, "fullscreen": 0, "width": 1920, "height": 1080}
 	
-	reg = {"fullscreen": 0, "visiblemouse": True, "rungame": True, "width": 1920, "height": 1080}
-	def setreg(key, value):
-		reg[key] = value
+	def setReg(self, key, value):
+		self.reg[key] = value
 	
-	def getreg(key):
-		if key in reg:
-			return reg[key]
+	def getReg(self, key):
+		if key in self.reg:
+			return self.reg[key]
+
+OPTIONS = Registry()

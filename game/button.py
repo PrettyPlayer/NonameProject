@@ -4,6 +4,7 @@ import sys
 import pygame
 
 from game.text import Text
+from game.registry import Registry, OPTIONS
 
 class Button(Text):
 	
@@ -28,11 +29,9 @@ class Button(Text):
 	def click(self, mousepos):
 		if self.rect[0] <= mousepos[0] <= self.rect[0]+self.rect[2] and self.rect[1] <= mousepos[1] <= self.rect[1]+self.rect[3]:
 			if self.name == "start":
-				menuwindow.backgroundmusic.stop()
-				scene = 1
-				menuwindow.run = False
+				OPTIONS.setReg("scene", 1)
 			elif self.name == "settings":
-				pass
+				OPTIONS.setReg("scene", 2)
 			elif self.name == "exit":
 				quit()
 				sys.exit()

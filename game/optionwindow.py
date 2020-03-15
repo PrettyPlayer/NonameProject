@@ -13,9 +13,9 @@ from game.sound import Sound
 from game.COLORS import Colors, COLOR
 from game.registry import Registry, OPTIONS
 
-class GameWindow(Window):
+class OptionWindow(Window):
 	def __init__(self):
-		self.scene = 1
+		self.scene = 2
 		self.run = True
 	
 	def events(self):
@@ -25,7 +25,7 @@ class GameWindow(Window):
 	
 	
 	def preInit(self):
-		pygame.mixer.music.stop()
+		pass
 	
 	def postInit(self):
 		pass

@@ -4,6 +4,7 @@ import sys
 import pygame
 
 from game.image import Image
+from game.registry import Registry, OPTIONS
 
 class Animation(Image):
 	
@@ -35,7 +36,7 @@ class Animation(Image):
 		self.currenttime+=1
 	
 	def changespeed(self, speed):
-		return(round(speed*FPS/60))
+		return(round(speed*OPTIONS.getReg("fps")/60))
 	
 	def loadallimage(self, sizex=1, sizey=1):
 		self.genlist()

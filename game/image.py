@@ -4,6 +4,8 @@ import sys
 from random import randint
 import pygame
 
+from game.registry import Registry, OPTIONS
+
 class Image(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
@@ -35,20 +37,20 @@ class Image(pygame.sprite.Sprite):
 			self.rect = self.image.get_rect(bottomright=(self.changex(posx), self.changey(posy)))
 	
 	def changex(self, x):
-		return(round(x/1920*width))
+		return(round(x/1920*OPTIONS.getReg("width")))
 	
 	def changey(self, y):
-		return(round(y/1080*height))
+		return(round(y/1080*OPTIONS.getReg("height")))
 	
 	def changesizex(self, sizex):
-		if width>1920:
-			return(sizex*width/1920)
+		if OPTIONS.getReg("width")>1920:
+			return(sizex*OPTIONS.getReg("width")/1920)
 		else:
 			return(sizex)
 	
 	def changesizey(self, sizey):
-		if height>1080:
-			return(sizey*height/1080)
+		if OPTIONS.getReg("height")>1080:
+			return(sizey*OPTIONS.getReg("height")/1080)
 		else:
 			return(sizey)
 	
@@ -60,4 +62,4 @@ class Image(pygame.sprite.Sprite):
 	def showimage(self, posx, posy, pos="center"):
 		self.pos=pos
 		self.createrectimage(posx, posy, self.pos)
-		surf_main.blit(self.image, self.rect)
+		OPTIONS.getReg("surf_main").blit(self.image, self.rect)

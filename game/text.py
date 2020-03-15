@@ -4,6 +4,7 @@ import sys
 import pygame
 
 from game.image import Image
+from game.registry import Registry, OPTIONS
 
 class Text(Image):
 	
@@ -20,4 +21,4 @@ class Text(Image):
 	
 	def showtext(self, posx, posy):
 		self.createrecttext(posx, posy)
-		surf_main.blit(self.text, self.textrect)
+		OPTIONS.getReg("surf_main").blit(self.text, self.textrect)
