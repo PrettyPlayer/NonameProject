@@ -3,7 +3,7 @@ import sys
 
 import pygame
 
-from game.registry import Registry, OPTIONS
+from game.Registry import Registry, OPTIONS
 
 class Window(object):
 	
@@ -12,22 +12,22 @@ class Window(object):
 		sys.exit()
 	
 	def preInitFullscreen(self):
-		if OPTIONS.getReg("fullscreen") == 1:
+		if OPTIONS.getReg("fullScreen") == 1:
 			self.surf_main = pygame.display.set_mode((OPTIONS.getReg("width"), OPTIONS.getReg("height")), pygame.FULLSCREEN)
 			OPTIONS.setReg("surf_main", self.surf_main)
-		elif OPTIONS.getReg("fullscreen") == 0:
+		elif OPTIONS.getReg("fullScreen") == 0:
 			self.surf_main = pygame.display.set_mode((OPTIONS.getReg("width"), OPTIONS.getReg("height")))
 			OPTIONS.setReg("surf_main", self.surf_main)
 	
 	def changeFullscreen(self):
-		if OPTIONS.getReg("fullscreen") == 1:
+		if OPTIONS.getReg("fullScreen") == 1:
 			self.surf_main = pygame.display.set_mode((OPTIONS.getReg("width"), OPTIONS.getReg("height")))
 			OPTIONS.setReg("surf_main", self.surf_main)
-			OPTIONS.setReg("fullscreen", 0)
-		elif OPTIONS.getReg("fullscreen") == 0:
+			OPTIONS.setReg("fullScreen", 0)
+		elif OPTIONS.getReg("fullScreen") == 0:
 			self.surf_main = pygame.display.set_mode((OPTIONS.getReg("width"), OPTIONS.getReg("height")), pygame.FULLSCREEN)
 			OPTIONS.setReg("surf_main", self.surf_main)
-			OPTIONS.setReg("fullscreen", 1)
+			OPTIONS.setReg("fullScreen", 1)
 	
 	def changeScene(self):
 		if not(OPTIONS.getReg("scene") == self.scene):

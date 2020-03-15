@@ -3,22 +3,29 @@ import sys
 
 import pygame
 
-from game.image import Image
-from game.registry import Registry, OPTIONS
+from game.Image import Image
+from game.Registry import Registry, OPTIONS
 
 class Text(Image):
 	
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
 	
-	def loadtext(self, text, font, sizetext, color):
-		self.text = pygame.font.Font("fonts\\" + font + ".ttf", sizetext)
+	def changeRectText(self, posX, posY):
+		self.textRect = self.text.get_rect(center=(self.changeX(posX), self.changeY(posY)))
+	
+	
+	def createStaticText(self, text, font, sizeText, color, posX, posY):
+		self.createText(text, font, sizeText, color)
+		self.changeRectText(posX, posY)
+	
+	def showStaticText(self):
+		OPTIONS.getReg("surf_main").blit(self.text, self.textRect)
+	
+	def createText(self, text, font, sizeText, color):
+		self.text = pygame.font.Font("fonts\\" + font + ".ttf", sizeText)
 		self.text = self.text.render(text, 1, color)
 	
-	def createrecttext(self, posx, posy):
-		self.textrect = self.text.get_rect(center=(self.changex(posx), self.changey(posy)))
-	
-	
-	def showtext(self, posx, posy):
-		self.createrecttext(posx, posy)
-		OPTIONS.getReg("surf_main").blit(self.text, self.textrect)
+	def showText(self, posX, posY):
+		self.createRectText(posX, posY)
+		OPTIONS.getReg("surf_main").blit(self.text, self.textRect)

@@ -2,33 +2,33 @@ import os
 
 import pygame
 
-from game.managegame import ManageGame
-from game.registry import Registry, OPTIONS
+from game.ManageGame import ManageGame
+from game.Registry import Registry, OPTIONS
 
 class InitGame(object):
 	
 	def __init__(self):
-		self.centeredwindow()
-		self.preinitsound()
-		self.initwindow()
-		self.setvisisblemouse()
+		self.centeredWindow()
+		self.preInitSound()
+		self.initWindow()
+		self.setVisisbleMouse()
 	
-	def centeredwindow(self):
+	def centeredWindow(self):
 		os.environ['SDL_VIDEO_CENTERED'] = '1'
 	
-	def preinitsound(self):
+	def preInitSound(self):
 		pygame.mixer.pre_init(44100, -16, 2, 512)
 	
-	def setvisisblemouse(self):
-		pygame.mouse.set_visible(OPTIONS.getReg("visiblemouse"))
+	def setVisisbleMouse(self):
+		pygame.mouse.set_visible(OPTIONS.getReg("visibleMouse"))
 	
-	def initwindow(self):
+	def initWindow(self):
 		pygame.init()
 		pygame.display.set_icon(pygame.image.load(os.path.realpath("img\\papich\\2.png")))
 		pygame.display.set_caption("Noname")
 	
 	
-	def initstart(self):
-		self.managegame = ManageGame()
+	def initStart(self):
+		self.manageGame = ManageGame()
 		while True:
-			self.managegame.update()
+			self.manageGame.update()

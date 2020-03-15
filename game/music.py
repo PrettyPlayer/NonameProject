@@ -5,10 +5,13 @@ import pygame
 
 class Music():
 	
-	def __init__(self, path):
-		self.music = pygame.mixer.music.load(path)
+	def __init__(self, name, path=None):
+		try:
+			self.music = pygame.mixer.music.load("music\\" + path + name + ".wav")
+		except:
+			self.music = pygame.mixer.music.load("music\\" + name + ".wav")
 	
-	def pauseupload(self, time):
+	def pauseUpload(self, time):
 		self.music = pygame.time.wait(time)
 	
 	def play(self, times):
@@ -19,5 +22,5 @@ class Music():
 	
 	
 	def start(self, time=300, times=-1):
-		self.pauseupload(time)
+		self.pauseUpload(time)
 		self.play(times)

@@ -1,19 +1,19 @@
-from game.menuwindow import MenuWindow
-from game.gamewindow import GameWindow
-from game.optionwindow import OptionWindow
-from game.registry import Registry, OPTIONS
+from game.MenuWindow import MenuWindow
+from game.GameWindow import GameWindow
+from game.OptionWindow import OptionWindow
+from game.Registry import Registry, OPTIONS
 
 class ManageGame(object):
 	
 	def __init__(self):
-		self.gamewindow = GameWindow()
-		self.menuwindow = MenuWindow()
-		self.optionwindow = OptionWindow()
+		self.gameWindow = GameWindow()
+		self.menuWindow = MenuWindow()
+		self.optionWindow = OptionWindow()
 	
 	def update(self):
 		if OPTIONS.getReg("scene") == 0:
-			self.menuwindow.start(60)
+			self.menuWindow.start(60)
 		elif OPTIONS.getReg("scene") == 1:
-			self.gamewindow.start(60)
+			self.gameWindow.start(60)
 		elif OPTIONS.getReg("scene") == 2:
-			self.optionwindow.start(60)
+			self.optionWindow.start(60)

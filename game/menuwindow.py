@@ -3,15 +3,15 @@ import sys
 
 import pygame
 
-from game.window import Window
-from game.image import Image
-from game.text import Text
-from game.button import Button
-from game.animation import Animation
-from game.music import Music
-from game.sound import Sound
-from game.COLORS import Colors, COLOR
-from game.registry import Registry, OPTIONS
+from game.Window import Window
+from game.Image import Image
+from game.Text import Text
+from game.Button import Button
+from game.Animation import Animation
+from game.Music import Music
+from game.Sound import Sound
+from game.Colors import Colors, COLOR
+from game.Registry import Registry, OPTIONS
 
 class MenuWindow(Window):
 	def __init__(self):
@@ -24,9 +24,9 @@ class MenuWindow(Window):
 				self.exit()
 			elif event.type == pygame.MOUSEBUTTONDOWN:
 				if event.button == 1:
-					self.startbutton.click(event.pos)
-					self.settingsbutton.click(event.pos)
-					self.exitbutton.click(event.pos)
+					self.startButton.click(event.pos)
+					self.settingsButton.click(event.pos)
+					self.exitButton.click(event.pos)
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_ESCAPE:
 					pass
@@ -34,38 +34,49 @@ class MenuWindow(Window):
 					self.changeFullscreen()
 	
 	def preInit(self):
-		
 		pygame.mixer.music.stop()
 		self.time=0
-		self.backgroundmusic = Music("sfx\\music.wav")
-		self.backgroundmusic.start(300, -1)
+		self.backgroundMusic = Music("music")
+		self.backgroundMusic.start(300, -1)
 		
-		self.backgroundmenuimage = Image()
-		self.backgroundmenuimage.createimage("img\\backgroundmenu\\", "backgroundmenuimage")
-		self.backgroundmenupapichimage = Image()
-		self.backgroundmenupapichimage.createimage("img\\backgroundmenu\\", "backgroundmenupapich")
-		self.backgroundmenublackimage = Image()
-		self.backgroundmenublackimage.createimage("img\\backgroundmenu\\", "backgroundmenublack")
+		# createStaticImage: posX, posY, pos, name, path=None, sizeX=1, sizeY=1
+		# createImage: name, path=None, sizeX=1, sizeY=1
+		self.backgroundMenuImage = Image()
+		self.backgroundMenuImage.createStaticImage(960, 540, "center", "backgroundmenuimage", "backgroundmenu\\")
 		
-		self.snowanimation = Animation("img\\snow\\", 29)
-		self.snowanimation.loadallimage()
+		self.backgroundMenuPapichImage = Image()
+		self.backgroundMenuPapichImage.createStaticImage(650, 750, "center", "backgroundmenupapich", "backgroundmenu\\")
 		
-		#self.testtext = Text()
-		#self.testtext.loadtext("TestText", "times", 24, COLOR.CYAN)
+		self.backgroundMenuBlackImage = Image()
+		self.backgroundMenuBlackImage.createStaticImage(960, 540, "center", "backgroundmenublack", "backgroundmenu\\")
 		
-		self.startbutton = Button("start")
-		self.startbutton.loadbutton("button", "Начать игру", "times", 32, COLOR.BLACK, 2, 1.5)
-		self.settingsbutton = Button("settings")
-		self.settingsbutton.loadbutton("settings", "", "times", 32, COLOR.BLACK, 1/16, 1/16)
-		self.exitbutton = Button("exit")
-		self.exitbutton.loadbutton("exit", "", "times", 32, COLOR.BLACK, 1/16, 1/16)
+		# createStaticAnimation: posX, posY, pos, sizeX=1, sizeY=1
+		# createAnimation: sizeX=1, sizeY=1
+		self.snowAnimation = Animation("snow\\", 29)
+		self.snowAnimation.createStaticAnimation(960, 540, "center")
+		
+		# createStaticButton: name, posX, posY, pos, text, font, sizeText, color, sizeX=1, sizeY=1
+		# createButton: name, text, font, sizeText, color, sizeX=1, sizeY=1
+		self.startButton = Button("start")
+		self.startButton.createStaticButton("button", 1400, 400, "center", "Начать игру", "times", 32, COLOR.BLACK, 2, 1.5)
+		
+		self.settingsButton = Button("settings")
+		self.settingsButton.createStaticButton("settings", 1920 - 10, 0 + 10, "topright", "", "times", 32, COLOR.BLACK, 1/16, 1/16)
+		
+		self.exitButton = Button("exit")
+		self.exitButton.createStaticButton("exit", 1920 - 10, 1080 - 10, "bottomright", "", "times", 32, COLOR.BLACK, 1/16, 1/16)
 	
 	def postInit(self):
-		self.backgroundmenuimage.showimage(960, 540)
-		self.snowanimation.showanimation(960, 540, 2)
-		self.backgroundmenupapichimage.showimage(650, 750)
-		self.backgroundmenublackimage.showimage(960, 540)
-		self.startbutton.showbutton(1400, 400)
-		self.settingsbutton.showbutton(1920 - 10, 0 + 10, "topright")
-		self.exitbutton.showbutton(1920 - 10, 1080 - 10, "bottomright")
+		# showImage: posX, posY, pos="center"
+		# showText: posX, posY
+		# showButton: posX, posY, pos="center"
+		# showAnimation: posX, posY, speed
+		# showStaticAnimation: speed
+		self.backgroundMenuImage.showStaticImage()
+		self.snowAnimation.showStaticAnimation(2)
+		self.backgroundMenuPapichImage.showStaticImage()
+		self.backgroundMenuBlackImage.showStaticImage()
+		self.startButton.showStaticButton()
+		self.settingsButton.showStaticButton()
+		self.exitButton.showStaticButton()
 		self.time+=1

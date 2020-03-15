@@ -3,49 +3,59 @@ import sys
 
 import pygame
 
-from game.image import Image
-from game.registry import Registry, OPTIONS
+from game.Image import Image
+from game.Registry import Registry, OPTIONS
 
 class Animation(Image):
 	
 	def __init__(self, path, num):
-		self.currenttime=0
-		self.currentnum=1
-		self.maxnum=num
+		self.currentTime=0
+		self.currentNum=1
+		self.maxNum=num
 		self.image={}
 		self.path=path
 	
-	def get(self, posx, posy, sizex=1, sizey=1):
-		self.posx = posx
-		self.posy = posy
-		self.sizex = sizex
-		self.sizey = sizey
+	def get(self, posX, posY, sizeX=1, sizeY=1):
+		self.posX = posX
+		self.posY = posY
+		self.sizeX = sizeX
+		self.sizeY = sizeY
 	
-	def genlist(self):
-		self.image={x: Image() for x in range(1, self.maxnum+1)}
+	def genList(self):
+		self.image={x: Image() for x in range(1, self.maxNum+1)}
 	
-	def updatenum(self):
-		if 0<self.currentnum<self.maxnum:
-			self.currentnum+=1
-		elif self.currentnum == self.maxnum:
-			self.currentnum = 1
+	def updateNum(self):
+		if 0<self.currentNum<self.maxNum:
+			self.currentNum+=1
+		elif self.currentNum == self.maxNum:
+			self.currentNum = 1
 		else:
-			print("Error updatenum()")
+			print("Error updateNum()")
 	
-	def updatetime(self):
-		self.currenttime+=1
+	def updateTime(self):
+		self.currentTime+=1
 	
-	def changespeed(self, speed):
+	def changeSpeed(self, speed):
 		return(round(speed*OPTIONS.getReg("fps")/60))
 	
-	def loadallimage(self, sizex=1, sizey=1):
-		self.genlist()
-		for i in range(1, self.maxnum+1):
-			self.image[i].createimage(self.path, i, sizex, sizey)
+	def createStaticAnimation(self, posX, posY, pos, sizeX=1, sizeY=1):
+		self.genList()
+		for i in range(1, self.maxNum+1):
+			self.image[i].createStaticImage(posX, posY, pos, i, self.path, sizeX, sizeY)
 	
+	def showStaticAnimation(self, speed):
+		if self.currentTime%self.changeSpeed(speed) == 0:
+			self.image[self.currentNum].showStaticImage()
+			self.updateNum()
+		self.updateTime()
 	
-	def showanimation(self, posx, posy, speed):
-		if self.currenttime%self.changespeed(speed) == 0:
-			self.image[self.currentnum].showimage(posx, posy)
-			self.updatenum()
-		self.updatetime()
+	def createAnimation(self, sizeX=1, sizeY=1):
+		self.genList()
+		for i in range(1, self.maxNum+1):
+			self.image[i].createImage(i, self.path, sizeX, sizeY)
+	
+	def showAnimation(self, posX, posY, speed):
+		if self.currentTime%self.changeSpeed(speed) == 0:
+			self.image[self.currentNum].showImage(posX, posY)
+			self.updateNum()
+		self.updateTime()

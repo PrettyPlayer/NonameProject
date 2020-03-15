@@ -3,15 +3,15 @@ import sys
 
 import pygame
 
-from game.window import Window
-from game.image import Image
-from game.text import Text
-from game.button import Button
-from game.animation import Animation
-from game.music import Music
-from game.sound import Sound
-from game.COLORS import Colors, COLOR
-from game.registry import Registry, OPTIONS
+from game.Window import Window
+from game.Image import Image
+from game.Text import Text
+from game.Button import Button
+from game.Animation import Animation
+from game.Music import Music
+from game.Sound import Sound
+from game.Colors import Colors, COLOR
+from game.Registry import Registry, OPTIONS
 
 class GameWindow(Window):
 	def __init__(self):
