@@ -1,4 +1,4 @@
-from game.InitGame import InitGame
+from game.system.InitGame import InitGame
 
 if __name__ == "__main__":
 	theGame = InitGame()
