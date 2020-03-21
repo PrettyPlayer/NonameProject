@@ -24,15 +24,20 @@ class GameWindow(Window):
 			if event.type == pygame.QUIT:
 				self.exit()
 			elif event.type == pygame.KEYDOWN:
-				if event.key == (pygame.K_LEFT or pygame.K_DOWN or pygame.K_RIGHT):
-					papich.changePos(event.key)
+				if event.key in (pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT):
+					self.papich.changePos(event.key)
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
 	
 	def preInit(self):
 		pygame.mixer.music.stop()
-		papich = Papich("papich\\", 3)
-		papich.createPapich(960, 800)
+		self.backgroundMenuImage = Image()
+		self.backgroundMenuImage.createStaticImage(960, 540, "center",
+		                    "backgroundgameimage", "backgroundgame\\")
+		self.papich = Papich()
+		self.papich.createPapich(960, 380, 1/4, 1/4)
+		
 	def postInit(self):
-		papich.showPapich()
+		self.backgroundMenuImage.showStaticImage()
+		self.papich.showPapich()
 	

@@ -19,7 +19,6 @@ class Image(pygame.sprite.Sprite):
 			except:
 				self.image = pygame.image.load(os.path.realpath("img\\" + path + str(name) + ".jpeg")).convert_alpha()
 	def scaleImage(self, sizeX=1, sizeY=1):
-		print(sizeX, sizeY)
 		self.image = pygame.transform.scale(self.image, (round(self.image.get_width()*self.changeSizeX(sizeX)), round(self.image.get_height()*self.changeSizeY(sizeY))))
 	
 	def changeRectImage(self, posX, posY, pos="center"):
