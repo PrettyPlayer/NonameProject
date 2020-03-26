@@ -33,15 +33,18 @@ class Papich(Image):
 			self.image = self.papichsurf[4]
 			self.scaleImage(self.sizeX, self.sizeY)
 			self.changeRectImage(self.posX-50, self.posY)
+			print("left")
 		elif event == pygame.K_DOWN:
 			self.currentNum = 2
 			self.image = self.papichsurf[3]
 			self.scaleImage(self.sizeX, self.sizeY)
 			self.changeRectImage(self.posX, self.posY)
+			print("center")
 		elif event == pygame.K_RIGHT:
 			self.currentNum = 3
 			self.image = self.papichsurf[2]
 			self.scaleImage(self.sizeX, self.sizeY)
 			self.changeRectImage(self.posX+50, self.posY)
+			print("right")
 	def showPapich(self):
 		self.showStaticImage()
