@@ -34,46 +34,9 @@ class GameWindow(Window):
 						self.flagSfx = 1
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
-				if event.key == pygame.K_q:
-					self.snd[1].play()
-				if event.key == pygame.K_a:
-					self.snd[2].play()
-				if event.key == pygame.K_w:
-					self.snd[3].play()
-				if event.key == pygame.K_s:
-					self.snd[4].play()
-				if event.key == pygame.K_d:
-					self.snd[5].play()
-				if event.key == pygame.K_r:
-					self.snd[6].play()
-				if event.key == pygame.K_f:
-					self.snd[7].play()
-				if event.key == pygame.K_t:
-					self.snd[8].play()
-				if event.key == pygame.K_g:
-					self.snd[9].play()
-				if event.key == pygame.K_h:
-					self.snd[10].play()
-				if event.key == pygame.K_u:
-					self.snd[11].play()
-				if event.key == pygame.K_j:
-					self.snd[12].play()
-				if event.key == pygame.K_i:
-					self.snd[13].play()
-				if event.key == pygame.K_k:
-					self.snd[14].play()
-				if event.key == pygame.K_o:
-					self.snd[15].play()
-				if event.key == pygame.K_l:
-					self.snd[16].play()
-				if event.key == pygame.K_SEMICOLON:
-					self.snd[17].play()
-				if event.key == pygame.K_LEFTBRACKET:
-					self.snd[18].play()
-				if event.key == pygame.K_QUOTE:
-					self.snd[19].play()
-				if event.key == pygame.K_RIGHTBRACKET:
-					self.snd[20].play()
+				if event.key in self.eventKeyDict.keys():
+					self.snd[self.eventKeyDict[event.key]].play()
+				print(event.key)
 	def preInit(self):
 		pygame.mixer.music.stop()
 		self.backgroundGameImage = Image()
@@ -86,9 +49,11 @@ class GameWindow(Window):
 		self.text = {}
 		self.startPosText = 530
 		self.changePosText = 0
+		self.textDict = {1: "A", 2: "S", 3: "D", 4: "F", 5: "G", 6: "H", 7: "J", 8: "K", 9: "L", 10: "Ж", 11: "Э"}
+		self.eventKeyDict = {113: 1, 97: 2, 119: 3, 115: 4, 100: 5, 114: 6, 102: 7, 116: 8, 103: 9, 104: 10, 117: 11, 106: 12, 105: 13, 107: 14, 111: 15, 108: 16, 59: 17, 91: 18, 39: 19, 93: 20}
 		for i in range(1, 12):
 			self.text[i] = Text()
-			self.text[i].createStaticText(str(i), "times", 24, COLOR.BLACK, self.startPosText + self.changePosText, 700)
+			self.text[i].createStaticText(self.textDict[i], "times", 24, COLOR.BLACK, self.startPosText + self.changePosText, 700)
 			self.changePosText += 86
 	def postInit(self):
 		if self.flagSfx:
