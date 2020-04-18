@@ -1,5 +1,5 @@
-from game.initgame import InitGame
+from game.system.InitGame import InitGame
 
 if __name__ == "__main__":
-	thegame = InitGame()
-	thegame.initstart()
+	theGame = InitGame()
+	theGame.initStart()
