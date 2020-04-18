@@ -45,9 +45,16 @@ class MenuWindow(Window):
 		self.backgroundMenuImage.createStaticImage(960, 540, "center",
 		                    "backgroundmenuimage", "backgroundmenu\\")
 		
-		self.backgroundMenuPapichImage = Image()
-		self.backgroundMenuPapichImage.createStaticImage(650, 750, "center",
-		                         "backgroundmenupapich", "backgroundmenu\\")
+		#self.backgroundMenuPapichImage = Image()
+		#self.backgroundMenuPapichImage.createStaticImage(650-480, 1080, "bottomleft",
+		#                         "backgroundmenupapich", "backgroundmenu\\", 1.2, 1.2)
+		self.backgroundMenuEpifImage = Image()
+		self.backgroundMenuEpifImage.createStaticImage(0, 1080, "bottomleft",
+		                         "4", "backgroundmenu\\", 1.8, 1.8)
+		
+		self.backgroundMenuPahomImage = Image()
+		self.backgroundMenuPahomImage.createStaticImage(1750, 800, "bottomright",
+		                         "2.1", "backgroundmenu\\", 1.1, 1.1)
 		
 		self.backgroundMenuBlackImage = Image()
 		self.backgroundMenuBlackImage.createStaticImage(960, 540, "center",
@@ -65,7 +72,7 @@ class MenuWindow(Window):
 		# createButton: name, text, font, sizeText,
 		#               color, sizeX=1, sizeY=1
 		self.startButton = Button("start")
-		self.startButton.createStaticButton("button", 1400, 400, "center",
+		self.startButton.createStaticButton("button", OPTIONS.getReg("width")/2, 980, "center",
 		                  "Начать игру", "times", 32, COLOR.BLACK, 2, 1.5)
 		
 		self.settingsButton = Button("settings")
@@ -88,8 +95,10 @@ class MenuWindow(Window):
 		self.fog.changePos(4)
 		self.fog.showImage(self.fog.posX, self.fog.posY, "topleft")
 		#self.snowAnimation.showStaticAnimation(1)
-		self.backgroundMenuPapichImage.showStaticImage()
-		self.backgroundMenuBlackImage.showStaticImage()
+		#self.backgroundMenuPapichImage.showStaticImage()
+		self.backgroundMenuPahomImage.showStaticImage()
+		self.backgroundMenuEpifImage.showStaticImage()
+		#self.backgroundMenuBlackImage.showStaticImage()
 		self.startButton.showStaticButton()
 		self.settingsButton.showStaticButton()
 		self.exitButton.showStaticButton()
