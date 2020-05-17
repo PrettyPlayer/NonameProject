@@ -1,5 +1,6 @@
 import os
 import sys
+import math
 
 import pygame
 
@@ -29,11 +30,25 @@ class GameWindow(Window):
 						if self.numSfx < 2:
 							self.numSfx += 1
 							self.flagSfx = 1
+					elif self.navigationNum == 2:
+						self.volumeSnd = self.snd[1].get_volume()*100
+						if self.volumeSnd < 100:
+							self.volumeSnd += 10
+							self.volumeSnd = math.ceil(self.volumeSnd)
+							self.flagSfx = 1
+							print(self.volumeSnd)
 				if event.key == pygame.K_DOWN:
 					if self.navigationNum == 1:
 						if 1 < self.numSfx:
 							self.numSfx -= 1
 							self.flagSfx = 1
+					elif self.navigationNum == 2:
+						self.volumeSnd = self.snd[1].get_volume()*100
+						if 0 < self.volumeSnd:
+							self.volumeSnd -= 10
+							self.volumeSnd = math.ceil(self.volumeSnd)
+							self.flagSfx = 1
+							print(self.volumeSnd)
 				if event.key == pygame.K_LEFT:
 					if 1 < self.navigationNum:
 						self.navigationNum -= 1
@@ -56,6 +71,7 @@ class GameWindow(Window):
 		self.numSfx = 1
 		self.flagSfx = 1
 		self.snd = {}
+		self.volumeSnd = 100
 		self.text = {}
 		self.textSfx = Text()
 		self.textSfx.createStaticText("text", "times", 36, COLOR.BLACK, 960, 250)
@@ -77,6 +93,7 @@ class GameWindow(Window):
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = pygame.mixer.Sound("sfx\\" + self.sfx + "\\" + str(i) + ".wav")
+				self.snd[i].set_volume(self.volumeSnd/100)
 			self.textSfx.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.textSfx.changeRectText(960, 250)
 		
