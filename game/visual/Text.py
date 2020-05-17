@@ -27,5 +27,5 @@ class Text(Image):
 		self.text = self.text.render(str(text), 1, color)
 	
 	def showText(self, posX, posY):
-		self.createRectText(posX, posY)
+		self.changeRectText(posX, posY)
 		OPTIONS.getReg("surf_main").blit(self.text, self.textRect)
