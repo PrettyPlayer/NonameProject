@@ -25,13 +25,19 @@ class GameWindow(Window):
 				self.exit()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
-					if self.numSfx < 2:
+					if self.numSfx < 2 and self.navigationNum == 1:
 						self.numSfx += 1
 						self.flagSfx = 1
 				if event.key == pygame.K_DOWN:
-					if 1 < self.numSfx:
+					if 1 < self.numSfx and self.navigationNum == 1:
 						self.numSfx -= 1
 						self.flagSfx = 1
+				if event.key == pygame.K_LEFT:
+					if 1 < self.navigationNum:
+						self.navigationNum -= 1
+				if event.key == pygame.K_RIGHT:
+					if self.navigationNum < 2:
+						self.navigationNum += 1
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
 				if event.key in self.eventKeyDict.keys():
@@ -43,6 +49,8 @@ class GameWindow(Window):
 		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage", "backgroundgame\\")
 		self.pianoImage = Image()
 		self.pianoImage.createStaticImage(960, 540, "center", "Piano", "backgroundgame\\")
+		
+		self.navigationNum = 1
 		self.numSfx = 1
 		self.flagSfx = 1
 		self.snd = {}
