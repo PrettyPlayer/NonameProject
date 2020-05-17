@@ -34,9 +34,8 @@ class GameWindow(Window):
 						self.volumeSnd = self.snd[1].get_volume()*100
 						if self.volumeSnd < 100:
 							self.volumeSnd += 10
-							self.volumeSnd = math.ceil(self.volumeSnd)
 							self.flagSfx = 1
-							print(self.volumeSnd)
+						self.volumeSnd = math.ceil(self.volumeSnd)
 				if event.key == pygame.K_DOWN:
 					if self.navigationNum == 1:
 						if 1 < self.numSfx:
@@ -46,9 +45,8 @@ class GameWindow(Window):
 						self.volumeSnd = self.snd[1].get_volume()*100
 						if 0 < self.volumeSnd:
 							self.volumeSnd -= 10
-							self.volumeSnd = math.ceil(self.volumeSnd)
 							self.flagSfx = 1
-							print(self.volumeSnd)
+						self.volumeSnd = math.ceil(self.volumeSnd)
 				if event.key == pygame.K_LEFT:
 					if 1 < self.navigationNum:
 						self.navigationNum -= 1
@@ -75,8 +73,12 @@ class GameWindow(Window):
 		self.text = {}
 		self.textSfx = Text()
 		self.textSfx.createStaticText("text", "times", 36, COLOR.BLACK, 960, 250)
-		self.textSamples = Text()
-		self.textSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 960, 200)
+		self.textCurrentSamples = Text()
+		self.textCurrentSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 960, 200)
+		self.textVolume = Text()
+		self.textVolume.createStaticText("text", "times", 36, COLOR.BLACK, 200, 250)
+		self.textCurrentVolume = Text()
+		self.textCurrentVolume.createStaticText("Volume:", "times", 36, COLOR.BLACK, 200, 200)
 		self.startPosText = 530
 		self.changePosText = 0
 		self.textDict = {1: "A", 2: "S", 3: "D", 4: "F", 5: "G", 6: "H", 7: "J", 8: "K", 9: "L", 10: "Ж", 11: "Э"}
@@ -96,10 +98,15 @@ class GameWindow(Window):
 				self.snd[i].set_volume(self.volumeSnd/100)
 			self.textSfx.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.textSfx.changeRectText(960, 250)
+			self.textVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
+			self.textVolume.changeRectText(200, 250)
+			
 		
 		self.backgroundGameImage.showStaticImage()
 		self.pianoImage.showStaticImage()
-		self.textSamples.showStaticText()
+		self.textCurrentSamples.showStaticText()
+		self.textCurrentVolume.showStaticText()
 		self.textSfx.showStaticText()
+		self.textVolume.showStaticText()
 		for i in range(1, 12):
 			self.text[i].showStaticText()
