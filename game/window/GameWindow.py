@@ -25,13 +25,15 @@ class GameWindow(Window):
 				self.exit()
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
-					if self.numSfx < 2 and self.navigationNum == 1:
-						self.numSfx += 1
-						self.flagSfx = 1
+					if self.navigationNum == 1:
+						if self.numSfx < 2:
+							self.numSfx += 1
+							self.flagSfx = 1
 				if event.key == pygame.K_DOWN:
-					if 1 < self.numSfx and self.navigationNum == 1:
-						self.numSfx -= 1
-						self.flagSfx = 1
+					if self.navigationNum == 1:
+						if 1 < self.numSfx:
+							self.numSfx -= 1
+							self.flagSfx = 1
 				if event.key == pygame.K_LEFT:
 					if 1 < self.navigationNum:
 						self.navigationNum -= 1
