@@ -47,6 +47,10 @@ class GameWindow(Window):
 		self.flagSfx = 1
 		self.snd = {}
 		self.text = {}
+		self.textSfx = Text()
+		self.textSfx.createStaticText("text", "times", 36, COLOR.BLACK, 960, 250)
+		self.textSamples = Text()
+		self.textSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 960, 200)
 		self.startPosText = 530
 		self.changePosText = 0
 		self.textDict = {1: "A", 2: "S", 3: "D", 4: "F", 5: "G", 6: "H", 7: "J", 8: "K", 9: "L", 10: "Ж", 11: "Э"}
@@ -59,11 +63,16 @@ class GameWindow(Window):
 		if self.flagSfx:
 			if self.numSfx == 1:
 				self.sfx = "fork"
-			if self.numSfx == 2:
+			elif self.numSfx == 2:
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = pygame.mixer.Sound("sfx\\" + self.sfx + "\\" + str(i) + ".wav")
+			self.textSfx.createText(self.sfx, "times", 36, COLOR.BLACK)
+			self.textSfx.changeRectText(960, 250)
+		
 		self.backgroundGameImage.showStaticImage()
 		self.pianoImage.showStaticImage()
+		self.textSamples.showStaticText()
+		self.textSfx.showStaticText()
 		for i in range(1, 12):
 			self.text[i].showStaticText()
