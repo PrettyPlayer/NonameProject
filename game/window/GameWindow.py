@@ -70,7 +70,9 @@ class GameWindow(Window):
 		self.flagSfx = 1
 		self.snd = {}
 		self.volumeSnd = 100
-		self.text = {}
+		self.textWhite = {}
+		self.textBlack = {}
+		self.dirPosBlackText = {12: 0, 13: 99, 14: 151, 15: 101, 16: 151, 17: 99, 18: 100, 19: 150, 20: 103}
 		self.textSfx = Text()
 		self.textSfx.createText("text", "times", 36, COLOR.BLACK)
 		self.textCurrentSamples = Text()
@@ -81,12 +83,18 @@ class GameWindow(Window):
 		self.textCurrentVolume.createStaticText("Volume:", "times", 36, COLOR.BLACK, 400, 200)
 		self.startPosText = 530
 		self.changePosText = 0
-		self.textDict = {1: "A", 2: "S", 3: "D", 4: "F", 5: "G", 6: "H", 7: "J", 8: "K", 9: "L", 10: "Ж", 11: "Э"}
+		self.textDict = {1: "A", 2: "S", 3: "D", 4: "F", 5: "G", 6: "H", 7: "J", 8: "K", 9: "L", 10: "Ж", 11: "Э", 12: "Q", 13: "W", 14: "R", 15: "T", 16: "U", 17: "I", 18: "O", 19: "[", 20: "]"}
 		self.eventKeyDict = {113: 1, 97: 2, 119: 3, 115: 4, 100: 5, 114: 6, 102: 7, 116: 8, 103: 9, 104: 10, 117: 11, 106: 12, 105: 13, 107: 14, 111: 15, 108: 16, 59: 17, 91: 18, 39: 19, 93: 20}
 		for i in range(1, 12):
-			self.text[i] = Text()
-			self.text[i].createStaticText(self.textDict[i], "times", 24, COLOR.BLACK, self.startPosText + self.changePosText, 700)
+			self.textWhite[i] = Text()
+			self.textWhite[i].createStaticText(self.textDict[i], "times", 24, COLOR.BLACK, self.startPosText + self.changePosText, 700)
 			self.changePosText += 86
+		self.startPosText = 484
+		self.changePosText = 0
+		for i in range(12, 21):
+			self.changePosText += self.dirPosBlackText[i]
+			self.textBlack[i] = Text()
+			self.textBlack[i].createStaticText(self.textDict[i], "times", 24, COLOR.WHITE, self.startPosText + self.changePosText, 575)
 	def postInit(self):
 		if self.flagSfx:
 			if self.numSfx == 1:
@@ -107,4 +115,6 @@ class GameWindow(Window):
 		self.textSfx.showText(200, 250)
 		self.textVolume.showText(400, 250)
 		for i in range(1, 12):
-			self.text[i].showStaticText()
+			self.textWhite[i].showStaticText()
+		for i in range(12, 21):
+			self.textBlack[i].showStaticText()
