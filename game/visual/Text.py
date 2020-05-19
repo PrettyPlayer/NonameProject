@@ -16,7 +16,7 @@ class Text(Image):
 	
 	
 	def createStaticText(self, text, font, sizeText, color, posX, posY):
-		self.createText(text, font, sizeText, color)
+		self.createText(str(text), font, sizeText, color)
 		self.changeRectText(posX, posY)
 	
 	def showStaticText(self):
@@ -24,8 +24,8 @@ class Text(Image):
 	
 	def createText(self, text, font, sizeText, color):
 		self.text = pygame.font.Font("fonts\\" + font + ".ttf", sizeText)
-		self.text = self.text.render(text, 1, color)
+		self.text = self.text.render(str(text), 1, color)
 	
 	def showText(self, posX, posY):
-		self.createRectText(posX, posY)
+		self.changeRectText(posX, posY)
 		OPTIONS.getReg("surf_main").blit(self.text, self.textRect)

@@ -35,7 +35,7 @@ class Image(pygame.sprite.Sprite):
 		elif pos == "right":
 			self.rect = self.image.get_rect(right=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "bottom":
-			self.rect = self.image.get_rect(bottom=(self.changeX(posX), self.changeY(posY)))
+			self.rect = self.image.get_rect(midbottom=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "bottomleft":
 			self.rect = self.image.get_rect(bottomleft=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "bottomright":
