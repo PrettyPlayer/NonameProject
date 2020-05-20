@@ -70,12 +70,18 @@ class GameWindow(Window):
 		self.pianoImage = Image()
 		self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame\\")
 		self.imgPressedKey = {}
+		self.volumeFrame = Image()
+		self.volumeFrame.createStaticImage(960, 300, "center", "volumeFrame", "options\\")
+		self.volumeFill = Image()
+		self.volumeFill.createImage("volumeFill", "options\\")
+		
 		
 		self.navigationNum = 1
 		self.numSfx = 1
 		self.flagSfx = 1
 		self.snd = {}
 		self.volumeSnd = 100
+		self.volumeSndFlag = 0
 		self.textWhite = {}
 		self.textBlack = {}
 		self.dirPosBlackText = {12: 0, 13: 99, 14: 151, 15: 101, 16: 151, 17: 99, 18: 100, 19: 150, 20: 103}
@@ -115,7 +121,12 @@ class GameWindow(Window):
 			self.changePosText += self.dirPosBlackText[i]
 			self.textBlack[i] = Text()
 			self.textBlack[i].createStaticText(self.textDict[i], "times", 24, COLOR.WHITE, self.startPosText + self.changePosText, self.pianoImage.rect[1] + 256)
+			
+		
 	def postInit(self):
+		self.volumeFillSurface = pygame.Surface((200, 200))
+		self.volumeFillSurface.set_colorkey((0, 0, 0))
+		
 		if self.flagSfx:
 			if self.numSfx == 1:
 				self.sfx = "fork"
@@ -133,6 +144,13 @@ class GameWindow(Window):
 		self.textCurrentVolume.showStaticText()
 		self.textSfx.showText(200, 250)
 		self.textVolume.showText(400, 250)
+		
+		self.volumeFill.changeRectImage(0, (100-self.volumeSnd)*2, "topleft")
+		print((100-self.volumeSnd)*2)
+		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
+		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (860, 200))
+		self.volumeFrame.showStaticImage()
+		
 		for i in range(1, 21):
 			if self.isPressedKeyDict[i] == 1:
 				self.imgPressedKey[i].showStaticImage()
@@ -141,3 +159,4 @@ class GameWindow(Window):
 			self.textWhite[i].showStaticText()
 		for i in range(12, 21):
 			self.textBlack[i].showStaticText()
+		pygame.display.update()

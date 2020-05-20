@@ -68,6 +68,9 @@ class Image(pygame.sprite.Sprite):
 	
 	def showStaticImage(self):
 		OPTIONS.getReg("surf_main").blit(self.image, self.rect)
+		
+	def showCrop(self, x, y, xSize, ySize):
+		OPTIONS.getReg("surf_main").blit(self.image, self.rect, (x, y, xSize, ySize))
 	
 	def createImage(self, name, path=None, sizeX=1, sizeY=1):
 		self.path = path
@@ -79,3 +82,7 @@ class Image(pygame.sprite.Sprite):
 	def showImage(self, posX, posY, pos="center"):
 		self.changeRectImage(posX, posY, pos)
 		self.showStaticImage()
+	
+	def showCropImage(self, posX, posY, pos, x, y, xSize, ySize):
+		self.changeRectImage(posX, posY, pos)
+		self.showCrop(x, y, xSize, ySize)
