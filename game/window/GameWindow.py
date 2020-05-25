@@ -24,7 +24,11 @@ class GameWindow(Window):
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				self.exit()
-			if event.type == pygame.KEYDOWN:
+			elif event.type == pygame.KEYUP:
+				if event.key in self.eventKeyDict.keys() and self.isPressedKeyDict[self.eventKeyDict[event.key]] == 1:
+					self.snd[self.eventKeyDict[event.key]].stop()
+					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
+			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
 					if self.navigationNum == 1:
 						#Кол-во наборов звуков (повышение)
@@ -32,7 +36,7 @@ class GameWindow(Window):
 							self.numSfx += 1
 							self.flagSfx = 1
 					elif self.navigationNum == 2:
-						self.volumeSnd = self.snd[1].get_volume()*100
+						self.volumeSnd = self.snd[1].sound.get_volume()*100
 						if self.volumeSnd < 100:
 							self.volumeSnd += 10
 							self.flagSfx = 1
@@ -44,7 +48,7 @@ class GameWindow(Window):
 							self.numSfx -= 1
 							self.flagSfx = 1
 					elif self.navigationNum == 2:
-						self.volumeSnd = self.snd[1].get_volume()*100
+						self.volumeSnd = self.snd[1].sound.get_volume()*100
 						if 0 < self.volumeSnd:
 							self.volumeSnd -= 10
 							self.flagSfx = 1
@@ -58,16 +62,15 @@ class GameWindow(Window):
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
 				if event.key in self.eventKeyDict.keys():
+					print(event.key)
 					self.snd[self.eventKeyDict[event.key]].play()
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 1
-			if event.type == pygame.KEYUP:
-				if event.key in self.eventKeyDict.keys():
-					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
 			
 	def preInit(self):
 		self.navigationNum = 1
 		self.numSfx = 1
 		self.flagSfx = 1
+		self.currentChannel = 0
 		self.snd = {}
 		self.volumeSnd = 100
 		self.volumeSndFlag = 0
@@ -130,16 +133,17 @@ class GameWindow(Window):
 		
 		if self.flagSfx:
 			if self.numSfx == 1:
-				self.sfx = "fork"
-			elif self.numSfx == 2:
-				self.sfx = "oh"
-			elif self.numSfx == 3:
 				self.sfx = "Grand Piano"
+			elif self.numSfx == 2:
+				self.sfx = "fork"
+			elif self.numSfx == 3:
+				self.sfx = "oh"
 			for i in range(1, 21):
-				self.snd[i] = pygame.mixer.Sound("sfx\\" + self.sfx + "\\" + str(i) + ".wav")
-				self.snd[i].set_volume(self.volumeSnd/100)
+				self.snd[i] = Sound(str(i), self.sfx)
+				self.snd[i].setVolume(self.volumeSnd)
 			self.textSfx.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.textVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
+			self.flagSfx = 0
 		
 		self.backgroundGameImage.showStaticImage()
 		self.pianoImage.showStaticImage()
@@ -152,6 +156,8 @@ class GameWindow(Window):
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
 		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (860, 200))
 		self.volumeFrame.showStaticImage()
+		
+		print(self.snd[1].channelPlay)
 		
 		for i in range(1, 21):
 			if self.isPressedKeyDict[i] == 1:
