@@ -32,7 +32,7 @@ class GameWindow(Window):
 				if event.key == pygame.K_UP:
 					if self.navigationNum == 1:
 						#Кол-во наборов звуков (повышение)
-						if self.numSfx < 3:
+						if self.numSfx < 5:
 							self.numSfx += 1
 							self.flagSfx = 1
 					elif self.navigationNum == 2:
@@ -135,8 +135,12 @@ class GameWindow(Window):
 			if self.numSfx == 1:
 				self.sfx = "Grand Piano"
 			elif self.numSfx == 2:
-				self.sfx = "fork"
+				self.sfx = "Flute"
 			elif self.numSfx == 3:
+				self.sfx = "Flute Attack"
+			elif self.numSfx == 4:
+				self.sfx = "fork"
+			elif self.numSfx == 5:
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = Sound(str(i), self.sfx)
@@ -156,8 +160,6 @@ class GameWindow(Window):
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
 		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (860, 200))
 		self.volumeFrame.showStaticImage()
-		
-		print(self.snd[1].channelPlay)
 		
 		for i in range(1, 21):
 			if self.isPressedKeyDict[i] == 1:

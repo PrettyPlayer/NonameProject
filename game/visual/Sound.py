@@ -27,4 +27,4 @@ class Sound():
 			OPTIONS.setReg("currentChannel", 0)
 		
 	def stop(self):
-		pygame.mixer.Channel(self.channelPlay).fadeout(100)
+		pygame.mixer.Channel(self.channelPlay).fadeout(200)
