@@ -30,35 +30,35 @@ class GameWindow(Window):
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
 			elif event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
-					if self.navigationNum == 1:
+					if self.numNavigation == 1:
 						#Кол-во наборов звуков (повышение)
-						if self.numSfx < 5:
-							self.numSfx += 1
-							self.flagSfx = 1
-					elif self.navigationNum == 2:
+						if self.numInstrumentSfx < 5:
+							self.numInstrumentSfx += 1
+							self.isChangeInstrumentSfx = 1
+					elif self.numNavigation == 2:
 						self.volumeSnd = self.snd[1].sound.get_volume()*100
 						if self.volumeSnd < 100:
 							self.volumeSnd += 10
-							self.flagSfx = 1
+							self.isChangeInstrumentSfx = 1
 						self.volumeSnd = math.ceil(self.volumeSnd)
 				if event.key == pygame.K_DOWN:
-					if self.navigationNum == 1:
+					if self.numNavigation == 1:
 						#Кол-во наборов звуков (понижение)
-						if 1 < self.numSfx:
-							self.numSfx -= 1
-							self.flagSfx = 1
-					elif self.navigationNum == 2:
+						if 1 < self.numInstrumentSfx:
+							self.numInstrumentSfx -= 1
+							self.isChangeInstrumentSfx = 1
+					elif self.numNavigation == 2:
 						self.volumeSnd = self.snd[1].sound.get_volume()*100
 						if 0 < self.volumeSnd:
 							self.volumeSnd -= 10
-							self.flagSfx = 1
+							self.isChangeInstrumentSfx = 1
 						self.volumeSnd = math.ceil(self.volumeSnd)
 				if event.key == pygame.K_LEFT:
-					if 1 < self.navigationNum:
-						self.navigationNum -= 1
+					if 1 < self.numNavigation:
+						self.numNavigation -= 1
 				if event.key == pygame.K_RIGHT:
-					if self.navigationNum < 2:
-						self.navigationNum += 1
+					if self.numNavigation < 2:
+						self.numNavigation += 1
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
 				if event.key in self.eventKeyDict.keys():
@@ -67,9 +67,9 @@ class GameWindow(Window):
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 1
 			
 	def preInit(self):
-		self.navigationNum = 1
-		self.numSfx = 1
-		self.flagSfx = 1
+		self.numNavigation = 1
+		self.numInstrumentSfx = 1
+		self.isChangeInstrumentSfx = 1
 		self.currentChannel = 0
 		self.snd = {}
 		self.volumeSnd = 100
@@ -131,23 +131,23 @@ class GameWindow(Window):
 		self.volumeFillSurface = pygame.Surface((200, 200))
 		self.volumeFillSurface.set_colorkey((0, 0, 0))
 		
-		if self.flagSfx:
-			if self.numSfx == 1:
+		if self.isChangeInstrumentSfx:
+			if self.numInstrumentSfx == 1:
 				self.sfx = "Grand Piano"
-			elif self.numSfx == 2:
+			elif self.numInstrumentSfx == 2:
 				self.sfx = "Flute"
-			elif self.numSfx == 3:
+			elif self.numInstrumentSfx == 3:
 				self.sfx = "Flute Attack"
-			elif self.numSfx == 4:
+			elif self.numInstrumentSfx == 4:
 				self.sfx = "fork"
-			elif self.numSfx == 5:
+			elif self.numInstrumentSfx == 5:
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = Sound(str(i), self.sfx)
 				self.snd[i].setVolume(self.volumeSnd)
 			self.textSfx.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.textVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
-			self.flagSfx = 0
+			self.isChangeInstrumentSfx = 0
 		
 		self.backgroundGameImage.showStaticImage()
 		self.pianoImage.showStaticImage()
