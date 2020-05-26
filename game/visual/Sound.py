@@ -18,13 +18,13 @@ class Sound():
 	def setVolume(self, vol):
 		self.sound.set_volume(vol/100)
 	
-	def play(self):
-		pygame.mixer.Channel(OPTIONS.getReg("currentChannel")).play(self.sound)
+	def playSnd(self):
 		self.channelPlay = OPTIONS.getReg("currentChannel")
+		pygame.mixer.Channel(self.channelPlay).play(self.sound)
 		if self.channelPlay < 7:
 			OPTIONS.setReg("currentChannel", self.channelPlay + 1)
 		elif self.channelPlay == 7:
 			OPTIONS.setReg("currentChannel", 0)
-		
-	def stop(self):
+		print(self.channelPlay)
+	def stopSnd(self):
 		pygame.mixer.Channel(self.channelPlay).fadeout(200)
