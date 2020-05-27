@@ -17,7 +17,8 @@ class InitGame(object):
 		os.environ['SDL_VIDEO_CENTERED'] = '1'
 	
 	def preInitSound(self):
-		pygame.mixer.pre_init(44100, -16, 2, 512)
+		pygame.mixer.init(44100, -16, 2, 512)
+		pygame.mixer.set_num_channels(21)
 	
 	def setVisisbleMouse(self):
 		pygame.mouse.set_visible(OPTIONS.getReg("visibleMouse"))

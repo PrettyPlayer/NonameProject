@@ -25,16 +25,13 @@ class GameWindow(Window):
 			#Выход на крестик
 			if event.type == pygame.QUIT:
 				self.exit()
-				
-			#Отпускание клавиши
-			elif event.type == pygame.KEYUP:
-				#Остановка звука при отжатии клавиши (Если self.fadeSnd = 1)
-				if event.key in self.eventKeyDict.keys() and self.isPressedKeyDict[self.eventKeyDict[event.key]] == 1 and self.fadeSnd == 1:
-					self.snd[self.eventKeyDict[event.key]].stopSnd()
-					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
 			
 			#Нажатие клавиши
-			elif event.type == pygame.KEYDOWN:
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_LSHIFT:
+					self.fadeSnd = 0
+				if event.key == pygame.K_SPACE:
+					self.isChangeNotesPage = 1
 				#Игра во весь экран
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
@@ -44,12 +41,12 @@ class GameWindow(Window):
 					self.snd[self.eventKeyDict[event.key]].playSnd()
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 1
 				#Изменение пункта меню (Вверх)
-				elif event.key == pygame.K_UP:
+				if event.key == pygame.K_RIGHT:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вверх)
 						if self.numInstrument < 5:
 							self.numInstrument += 1
-							self.isChangeInstrumentSfx = 1
+							self.isChangeInstrument = 1
 					elif self.numNavigation == 2:
 						#Изменение громкости (Вверх)
 						self.volumeSnd = self.snd[1].sound.get_volume()*100
@@ -59,16 +56,16 @@ class GameWindow(Window):
 						self.volumeSnd = math.ceil(self.volumeSnd)
 					elif self.numNavigation == 3:
 						#Выбор нот (Вверх)
-						if self.numNotes <1:
+						if self.numNotes < 1:
 							self.numNotes += 1
 							self.isChangeNotes = 1
 				#Изменение пункта меню (Вниз)
-				elif event.key == pygame.K_DOWN:
+				elif event.key == pygame.K_LEFT:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вниз)
 						if 1 < self.numInstrument:
 							self.numInstrument -= 1
-							self.isChangeInstrumentSfx = 1
+							self.isChangeInstrument = 1
 					elif self.numNavigation == 2:
 						#Изменение громкости (Вниз)
 						self.volumeSnd = self.snd[1].sound.get_volume()*100
@@ -78,26 +75,36 @@ class GameWindow(Window):
 						self.volumeSnd = math.ceil(self.volumeSnd)
 					elif self.numNavigation == 3:
 						#Выбор нот (Вниз)
-						if 1 < self.numNotes:
+						if 0 < self.numNotes:
 							self.numNotes -= 1
 							self.isChangeNotes = 1
 				#Перемещение в меню (Вправо)
-				elif event.key == pygame.K_RIGHT:
+				elif event.key == pygame.K_DOWN:
 					if self.numNavigation < 3:
 						self.numNavigation += 1
 				#Перемещение в меню (Влево)
-				elif event.key == pygame.K_LEFT:
+				elif event.key == pygame.K_UP:
 					if 1 < self.numNavigation:
 						self.numNavigation -= 1
+			
+			#Отпускание клавиши
+			if event.type == pygame.KEYUP:
+				if event.key == pygame.K_LSHIFT:
+					self.fadeSnd = 1
+				#Остановка звука при отжатии клавиши (Если self.fadeSnd = 1)
+				if event.key in self.eventKeyDict.keys():
+					if self.isPressedKeyDict[self.eventKeyDict[event.key]] == 1 and self.fadeSnd == 1:
+						self.snd[self.eventKeyDict[event.key]].stopSnd()
+						self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
 			
 	def preInit(self):
 		#Создание переменных/словарей
 		self.numNavigation = 1
 		self.numInstrument = 1
-		self.fadeSnd = 0
+		self.fadeSnd = 1
 		self.volumeSnd = 100
-		self.numNotes = 1
-		self.isChangeInstrumentSfx = 1
+		self.numNotes = 0
+		self.isChangeInstrument = 1
 		self.isChangeVolumeSfx = 1
 		self.isChangeNotes = 1
 		self.snd = {}
@@ -105,6 +112,7 @@ class GameWindow(Window):
 		self.textBlack = {}
 		
 		#Заполнение словарей
+		self.pagesOfNotes = {1: 5}
 		self.dirPosBlackText = {12: 0, 13: 99, 14: 151, 15: 101, 16: 151, 17: 99, 18: 100, 19: 150, 20: 103}
 		self.isPressedKeyDict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0}
 		self.imgPressedKeyDict = {1: "6", 2: "7", 3: "1", 4: "2", 5: "3", 6: "4", 7: "5", 8: "6", 9: "7", 10: "1", 11: "2", 12: "black", 13: "black", 14: "black", 15: "black", 16: "black", 17: "black", 18: "black", 19: "black", 20: "black"}
@@ -117,14 +125,14 @@ class GameWindow(Window):
 		
 		#Создание переменных с изображениями
 		self.backgroundGameImage = Image()
-		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage", "backgroundgame\\")
+		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage", "backgroundgame")
 		self.pianoImage = Image()
-		self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame\\")
+		self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
 		self.imgPressedKey = {}
 		self.volumeFrame = Image()
-		self.volumeFrame.createStaticImage(1700, 600, "center", "volumeFrame", "options\\")
+		self.volumeFrame.createStaticImage(1700, 600, "center", "volumeFrame", "options")
 		self.volumeFill = Image()
-		self.volumeFill.createImage("volumeFill", "options\\")
+		self.volumeFill.createImage("volumeFill", "options")
 		
 		#Создание переменных с текстом
 		self.textSamples = Text()
@@ -143,10 +151,10 @@ class GameWindow(Window):
 		#Создание словарей изображений
 		for i in range(1, 12):
 			self.imgPressedKey[i] = Image()
-			self.imgPressedKey[i].createStaticImage(self.pianoImage.rect[0] + self.widthPressedKeyDict[i], self.pianoImage.rect[1] + 224, "center", self.imgPressedKeyDict[i], "piano\\")
+			self.imgPressedKey[i].createStaticImage(self.pianoImage.rect[0] + self.widthPressedKeyDict[i], self.pianoImage.rect[1] + 224, "center", self.imgPressedKeyDict[i], "piano")
 		for i in range(12, 21):
 			self.imgPressedKey[i] = Image()
-			self.imgPressedKey[i].createStaticImage(self.pianoImage.rect[0] + self.widthPressedKeyDict[i], self.pianoImage.rect[1] + 149, "center", self.imgPressedKeyDict[i], "piano\\")
+			self.imgPressedKey[i].createStaticImage(self.pianoImage.rect[0] + self.widthPressedKeyDict[i], self.pianoImage.rect[1] + 149, "center", self.imgPressedKeyDict[i], "piano")
 		
 		#Создание словарей текста
 		#self.startPosText = 530
@@ -171,7 +179,7 @@ class GameWindow(Window):
 		self.volumeFillSurface.set_colorkey((0, 0, 0))
 		
 		#Изменения меню
-		if self.isChangeInstrumentSfx:
+		if self.isChangeInstrument:
 			if self.numInstrument == 1:
 				self.sfx = "Grand Piano"
 			elif self.numInstrument == 2:
@@ -182,26 +190,46 @@ class GameWindow(Window):
 				self.sfx = "fork"
 			elif self.numInstrument == 5:
 				self.sfx = "oh"
+			for i in range(1, 21):
+				self.snd[i] = Sound(str(i), self.sfx)
+				self.snd[i].setVolume(self.volumeSnd)
 			self.textCurrentSamples.createText(self.sfx, "times", 36, COLOR.BLACK)
-			self.isChangeInstrumentSfx = 0
+			self.isChangeInstrument = 0
 		
 		#Изменение громкости
 		if self.isChangeVolumeSfx:
 			for i in range(1, 21):
-				self.snd[i] = Sound(str(i), self.sfx)
 				self.snd[i].setVolume(self.volumeSnd)
 			self.textCurrentVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
 			self.isChangeVolumeSfx = 0
 		
 		#Изменение нот
 		if self.isChangeNotes:
-			if self.numNotes == 1:
-				self.notes = "Samidare"
+			if self.numNotes == 0:
+				self.notes = "None"
+				self.isShowNotesPage = 0
+			else:
+				if self.numNotes == 1:
+					self.notes = "Samidare"
+				self.numNotesPage = 1
+				self.notesImage = Image()
+				self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				self.isShowNotesPage = 1
 			self.textCurrentNotes.createText(self.notes, "times", 36, COLOR.BLACK)
 			self.isChangeNotes = 0
+			self.isChangeNotesPage = 0
+		
+		#Изменение страницы ноты
+		if self.isChangeNotesPage and self.numNotes != 0:
+			if self.numNotesPage < self.pagesOfNotes[self.numNotes]:
+				self.numNotesPage += 1
+				self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				self.isChangeNotesPage = 0
 		
 		#Отрисовка изображений/текста
 		self.backgroundGameImage.showStaticImage()
+		if self.isShowNotesPage:
+			self.notesImage.showStaticImage()
 		self.pianoImage.showStaticImage()
 		self.textSamples.showStaticText()
 		self.textVolume.showStaticText()
@@ -217,15 +245,15 @@ class GameWindow(Window):
 		
 		#Проверка на отжатие клавиши и её отрисовка
 		for i in range(1, 21):
-			print(self.snd[i].sound)
-			if self.snd[i].sound.get_num_channels() < 0:
-				self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
-				if self.isPressedKeyDict[i] == 1:
-					self.imgPressedKey[i].showStaticImage()
+			if not pygame.mixer.Channel(self.snd[i].channelPlay).get_busy():
+				self.isPressedKeyDict[i] = 0
+			if self.isPressedKeyDict[i] == 1:
+				self.imgPressedKey[i].showStaticImage()
 		
 		for i in range(1, 12):
 			self.textWhite[i].showStaticText()
 		for i in range(12, 21):
 			self.textBlack[i].showStaticText()
 			
+		print(self.fadeSnd)
 		pygame.display.update()
