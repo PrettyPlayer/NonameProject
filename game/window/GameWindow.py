@@ -37,7 +37,6 @@ class GameWindow(Window):
 					self.changeFullscreen()
 				#Звук на нажатие клавиши синтезатора
 				if event.key in self.eventKeyDict.keys():
-					print("Нажата клавиша", event.key)
 					self.snd[self.eventKeyDict[event.key]].playSnd()
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 1
 				#Изменение пункта меню (Вверх)
@@ -254,6 +253,5 @@ class GameWindow(Window):
 			self.textWhite[i].showStaticText()
 		for i in range(12, 21):
 			self.textBlack[i].showStaticText()
-			
-		print(self.fadeSnd)
+		
 		pygame.display.update()
