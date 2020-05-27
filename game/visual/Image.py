@@ -10,14 +10,17 @@ class Image(pygame.sprite.Sprite):
 	def __init__(self):
 		pygame.sprite.Sprite.__init__(self)
 	
-	def loadImage(self, name, path=None):
+	def loadImage(self, name, path=None, path2=None):
 		try:
-			self.image = pygame.image.load(os.path.realpath("img\\" + path + str(name) + ".png")).convert_alpha()
+			self.image = pygame.image.load(os.path.realpath("img\\" + path2 + "\\" + path + "\\" + str(name) + ".png")).convert_alpha()
 		except:
 			try:
-				self.image = pygame.image.load(os.path.realpath("img\\" + str(name) + ".png")).convert_alpha()
+				self.image = pygame.image.load(os.path.realpath("img\\" + path + "\\" + str(name) + ".png")).convert_alpha()
 			except:
-				self.image = pygame.image.load(os.path.realpath("img\\" + path + str(name) + ".jpeg")).convert_alpha()
+				try:
+					self.image = pygame.image.load(os.path.realpath("img\\" + str(name) + ".png")).convert_alpha()
+				except:
+					self.image = pygame.image.load(os.path.realpath("img\\" + path + str(name) + ".jpeg")).convert_alpha()
 	def scaleImage(self, sizeX=1, sizeY=1):
 		self.image = pygame.transform.scale(self.image, (round(self.image.get_width()*self.changeSizeX(sizeX)), round(self.image.get_height()*self.changeSizeY(sizeY))))
 	
@@ -25,7 +28,7 @@ class Image(pygame.sprite.Sprite):
 		if pos == "center":
 			self.rect = self.image.get_rect(center=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "top":
-			self.rect = self.image.get_rect(top=(self.changeX(posX), self.changeY(posY)))
+			self.rect = self.image.get_rect(midtop=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "topleft":
 			self.rect = self.image.get_rect(topleft=(self.changeX(posX), self.changeY(posY)))
 		elif pos == "topright":
@@ -60,9 +63,10 @@ class Image(pygame.sprite.Sprite):
 			return(sizeY)
 	
 	
-	def createStaticImage(self, posX, posY, pos, name, path=None, sizeX=1, sizeY=1):
+	def createStaticImage(self, posX, posY, pos, name, path=None, path2=None, sizeX=1, sizeY=1):
 		self.path = path
-		self.loadImage(name, self.path)
+		self.path2 = path2
+		self.loadImage(name, self.path, self.path2)
 		self.scaleImage(sizeX, sizeY)
 		self.changeRectImage(posX, posY, pos)
 	
@@ -72,11 +76,12 @@ class Image(pygame.sprite.Sprite):
 	def showCrop(self, x, y, xSize, ySize):
 		OPTIONS.getReg("surf_main").blit(self.image, self.rect, (x, y, xSize, ySize))
 	
-	def createImage(self, name, path=None, sizeX=1, sizeY=1):
+	def createImage(self, name, path=None, path2=None, sizeX=1, sizeY=1):
 		self.path = path
+		self.path2 = path2
 		self.sizeX = sizeX
 		self.sizeY = sizeY
-		self.loadImage(name, self.path)
+		self.loadImage(name, self.path, self.path2)
 		self.scaleImage(sizeX, sizeY)
 	
 	def showImage(self, posX, posY, pos="center"):

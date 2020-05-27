@@ -6,7 +6,6 @@ import pygame
 from game.system.Registry import Registry, OPTIONS
 
 class Sound():
-	
 	def __init__(self, name, path=None):
 		self.name = name
 		self.channelPlay = 0
@@ -18,13 +17,13 @@ class Sound():
 	def setVolume(self, vol):
 		self.sound.set_volume(vol/100)
 	
-	def play(self):
-		pygame.mixer.Channel(OPTIONS.getReg("currentChannel")).play(self.sound)
+	def playSnd(self):
 		self.channelPlay = OPTIONS.getReg("currentChannel")
-		if self.channelPlay < 7:
+		pygame.mixer.Channel(self.channelPlay).play(self.sound)
+		if self.channelPlay < 19:
 			OPTIONS.setReg("currentChannel", self.channelPlay + 1)
-		elif self.channelPlay == 7:
+		elif self.channelPlay == 19:
 			OPTIONS.setReg("currentChannel", 0)
-		
-	def stop(self):
-		pygame.mixer.Channel(self.channelPlay).fadeout(100)
+		print(self.channelPlay)
+	def stopSnd(self):
+		pygame.mixer.Channel(self.channelPlay).fadeout(200)
