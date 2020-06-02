@@ -25,5 +25,5 @@ class Sound():
 		elif self.channelPlay == 19:
 			OPTIONS.setReg("currentChannel", 0)
 		print(self.channelPlay)
-	def stopSnd(self):
-		pygame.mixer.Channel(self.channelPlay).fadeout(200)
+	def stopSnd(self, strFade):
+		pygame.mixer.Channel(self.channelPlay).fadeout(strFade)

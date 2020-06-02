@@ -54,6 +54,11 @@ class GameWindow(Window):
 							self.isChangeVolumeSfx = 1
 						self.volumeSnd = math.ceil(self.volumeSnd)
 					elif self.numNavigation == 3:
+						#Изменение fade
+						if self.strFade < 2000:
+							self.strFade += 100
+							self.isChangeStrFade = 1
+					elif self.numNavigation == 4:
 						#Выбор нот (Вверх)
 						if self.numNotes < 1:
 							self.numNotes += 1
@@ -73,18 +78,24 @@ class GameWindow(Window):
 							self.isChangeVolumeSfx = 1
 						self.volumeSnd = math.ceil(self.volumeSnd)
 					elif self.numNavigation == 3:
+						#Изменение fade
+						if 0 < self.strFade:
+							self.strFade -= 100
+							self.isChangeStrFade = 1
+					elif self.numNavigation == 4:
 						#Выбор нот (Вниз)
 						if 0 < self.numNotes:
 							self.numNotes -= 1
 							self.isChangeNotes = 1
 				#Перемещение в меню (Вправо)
 				elif event.key == pygame.K_DOWN:
-					if self.numNavigation < 3:
+					if self.numNavigation < 4:
 						self.numNavigation += 1
 				#Перемещение в меню (Влево)
 				elif event.key == pygame.K_UP:
 					if 1 < self.numNavigation:
 						self.numNavigation -= 1
+				print(self.strFade)
 			
 			#Отпускание клавиши
 			if event.type == pygame.KEYUP:
@@ -93,7 +104,7 @@ class GameWindow(Window):
 				#Остановка звука при отжатии клавиши (Если self.fadeSnd = 1)
 				if event.key in self.eventKeyDict.keys():
 					if self.isPressedKeyDict[self.eventKeyDict[event.key]] == 1 and self.fadeSnd == 1:
-						self.snd[self.eventKeyDict[event.key]].stopSnd()
+						self.snd[self.eventKeyDict[event.key]].stopSnd(self.strFade)
 						self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
 			
 	def preInit(self):
@@ -101,10 +112,12 @@ class GameWindow(Window):
 		self.numNavigation = 1
 		self.numInstrument = 1
 		self.fadeSnd = 1
+		self.strFade = 100
 		self.volumeSnd = 100
 		self.numNotes = 0
 		self.isChangeInstrument = 1
 		self.isChangeVolumeSfx = 1
+		self.isChangeStrFade = 1
 		self.isChangeNotes = 1
 		self.snd = {}
 		self.textWhite = {}
@@ -138,12 +151,16 @@ class GameWindow(Window):
 		self.textSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 200, 200)
 		self.textVolume = Text()
 		self.textVolume.createStaticText("Volume:", "times", 36, COLOR.BLACK, 200, 400)
+		self.textStrFade = Text()
+		self.textStrFade.createStaticText("Fade:", "times", 36, COLOR.BLACK, 200, 600)
 		self.textNotes = Text()
-		self.textNotes.createStaticText("Notes:", "times", 36, COLOR.BLACK, 200, 600)
+		self.textNotes.createStaticText("Notes:", "times", 36, COLOR.BLACK, 200, 800)
 		self.textCurrentSamples = Text()
 		self.textCurrentSamples.createText("text", "times", 36, COLOR.BLACK)
 		self.textCurrentVolume = Text()
 		self.textCurrentVolume.createText("text", "times", 36, COLOR.BLACK)
+		self.textCurrentStrFade = Text()
+		self.textCurrentStrFade.createText("text", "times", 36, COLOR.BLACK)
 		self.textCurrentNotes = Text()
 		self.textCurrentNotes.createText("text", "times", 36, COLOR.BLACK)
 		
@@ -204,6 +221,11 @@ class GameWindow(Window):
 			self.textCurrentVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
 			self.isChangeVolumeSfx = 0
 		
+		#Изменение fade
+		if self.isChangeStrFade:
+			self.textCurrentStrFade.createText(self.strFade, "times", 36, COLOR.BLACK)
+			self.isChangeStrFade = 0
+		
 		#Изменение нот
 		if self.isChangeNotes:
 			if self.numNotes == 0:
@@ -234,10 +256,12 @@ class GameWindow(Window):
 		self.pianoImage.showStaticImage()
 		self.textSamples.showStaticText()
 		self.textVolume.showStaticText()
+		self.textStrFade.showStaticText()
 		self.textNotes.showStaticText()
 		self.textCurrentSamples.showText(200, 250)
 		self.textCurrentVolume.showText(200, 450)
-		self.textCurrentNotes.showText(200, 650)
+		self.textCurrentStrFade.showText(200, 650)
+		self.textCurrentNotes.showText(200, 850)
 		
 		self.volumeFill.changeRectImage(0, (100-self.volumeSnd)*2, "topleft")
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
