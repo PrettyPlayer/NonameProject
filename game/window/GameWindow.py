@@ -43,7 +43,7 @@ class GameWindow(Window):
 				if event.key == pygame.K_RIGHT:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вверх)
-						if self.numInstrument < 5:
+						if self.numInstrument < 6:
 							self.numInstrument += 1
 							self.isChangeInstrument = 1
 					elif self.numNavigation == 2:
@@ -186,8 +186,10 @@ class GameWindow(Window):
 			elif self.numInstrument == 3:
 				self.sfx = "Flute Attack"
 			elif self.numInstrument == 4:
-				self.sfx = "fork"
+				self.sfx = "Contrabass"
 			elif self.numInstrument == 5:
+				self.sfx = "fork"
+			elif self.numInstrument == 6:
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = Sound(str(i), self.sfx)
