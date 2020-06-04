@@ -43,7 +43,7 @@ class GameWindow(Window):
 				if event.key == pygame.K_RIGHT:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вверх)
-						if self.numInstrument < 6:
+						if self.numInstrument < 5:
 							self.numInstrument += 1
 							self.isChangeInstrument = 1
 					elif self.numNavigation == 2:
@@ -145,8 +145,12 @@ class GameWindow(Window):
 		#self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
 		self.pianoImage.createStaticImage(960, 1075, "bottom", "Piano2", "piano")
 		self.imgPressedKey = {}
+		self.frameImage = Image()
+		self.frameImage.createImage("frame", "options")
+		self.instrumentImage = Image()
+		self.instrumentImage.createStaticImage(494+78, 573+78, "center", "Grand Piano", "options")
 		self.volumeFrame = Image()
-		self.volumeFrame.createStaticImage(494+78, 573+78, "center", "volumeFrame", "options")
+		self.volumeFrame.createStaticImage(494+78+170, 573+78, "center", "volumeFrame", "options")
 		self.volumeFill = Image()
 		self.volumeFill.createImage("volumeFill", "options")
 		
@@ -205,16 +209,15 @@ class GameWindow(Window):
 			elif self.numInstrument == 2:
 				self.sfx = "Flute"
 			elif self.numInstrument == 3:
-				self.sfx = "Flute Attack"
-			elif self.numInstrument == 4:
 				self.sfx = "Contrabass"
-			elif self.numInstrument == 5:
+			elif self.numInstrument == 4:
 				self.sfx = "fork"
-			elif self.numInstrument == 6:
+			elif self.numInstrument == 5:
 				self.sfx = "oh"
 			for i in range(1, 21):
 				self.snd[i] = Sound(str(i), self.sfx)
 				self.snd[i].setVolume(self.volumeSnd)
+			self.instrumentImage.createStaticImage(494+78, 573+78, "center", self.sfx, "options")
 			self.textCurrentSamples.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.isChangeInstrument = 0
 		
@@ -255,11 +258,15 @@ class GameWindow(Window):
 				self.notesImage.createStaticImage(960, 5, "top", str(self.numNotesPage), self.notes, "notes")
 				self.isChangeNotesPage = 0
 		
+		#Изменение положения фрейма
+		self.frameImage.changeRectImage(494+78 + 170*(self.numNavigation-1), 573+78, pos="center")
+		
 		#Отрисовка изображений/текста
 		self.backgroundGameImage.showStaticImage()
 		if self.isShowNotesPage:
 			self.notesImage.showStaticImage()
 		self.pianoImage.showStaticImage()
+		self.instrumentImage.showStaticImage()
 		self.textSamples.showStaticText()
 		self.textVolume.showStaticText()
 		self.textStrFade.showStaticText()
@@ -271,8 +278,10 @@ class GameWindow(Window):
 		
 		self.volumeFill.changeRectImage(0, (100-self.volumeSnd)*1.5, "topleft")
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
-		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (494+5, 573+5))
+		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (494+5+170, 573+5))
 		self.volumeFrame.showStaticImage()
+		
+		self.frameImage.showStaticImage()
 		
 		#Проверка на отжатие клавиши и её отрисовка
 		for i in range(1, 21):
