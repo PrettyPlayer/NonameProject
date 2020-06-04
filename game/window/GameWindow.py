@@ -40,7 +40,7 @@ class GameWindow(Window):
 					self.snd[self.eventKeyDict[event.key]].playSnd()
 					self.isPressedKeyDict[self.eventKeyDict[event.key]] = 1
 				#Изменение пункта меню (Вверх)
-				if event.key == pygame.K_RIGHT:
+				if event.key == pygame.K_UP:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вверх)
 						if self.numInstrument < 5:
@@ -64,7 +64,7 @@ class GameWindow(Window):
 							self.numNotes += 1
 							self.isChangeNotes = 1
 				#Изменение пункта меню (Вниз)
-				elif event.key == pygame.K_LEFT:
+				elif event.key == pygame.K_DOWN:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вниз)
 						if 1 < self.numInstrument:
@@ -88,11 +88,11 @@ class GameWindow(Window):
 							self.numNotes -= 1
 							self.isChangeNotes = 1
 				#Перемещение в меню (Вправо)
-				elif event.key == pygame.K_DOWN:
+				elif event.key == pygame.K_RIGHT:
 					if self.numNavigation < 4:
 						self.numNavigation += 1
 				#Перемещение в меню (Влево)
-				elif event.key == pygame.K_UP:
+				elif event.key == pygame.K_LEFT:
 					if 1 < self.numNavigation:
 						self.numNavigation -= 1
 				print(self.strFade)
@@ -145,30 +145,38 @@ class GameWindow(Window):
 		#self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
 		self.pianoImage.createStaticImage(960, 1075, "bottom", "Piano2", "piano")
 		self.imgPressedKey = {}
+		
 		self.frameImage = Image()
-		self.frameImage.createImage("frame", "options")
+		self.frameImage.createImage("frameRed", "options")
 		self.instrumentImage = Image()
-		self.instrumentImage.createStaticImage(494+78, 573+78, "center", "Grand Piano", "options")
+		self.instrumentImage.createStaticImage(494+78, 573+78, "center", "Grand Piano", "instruments")
+		self.fadeFrame = Image()
+		self.fadeFrame.createStaticImage(494+78+204+204, 573+78, "center", "frameBlack", "options")
 		self.volumeFrame = Image()
-		self.volumeFrame.createStaticImage(494+78+170, 573+78, "center", "volumeFrame", "options")
+		self.volumeFrame.createStaticImage(494+78+204, 573+78, "center", "volumeFrame", "options")
+		self.notesFrameImage = Image()
+		self.notesFrameImage.createStaticImage(494+78, 573+78, "center", "None", "None", "notes")
+		
 		self.volumeFill = Image()
 		self.volumeFill.createImage("volumeFill", "options")
+		self.fadeFill = Image()
+		self.fadeFill.createImage("volumeFill", "options")
 		
 		#Создание переменных с текстом
-		self.textSamples = Text()
-		self.textSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 200, 200)
-		self.textVolume = Text()
-		self.textVolume.createStaticText("Volume:", "times", 36, COLOR.BLACK, 200, 400)
+		#self.textSamples = Text()
+		#self.textSamples.createStaticText("Samples:", "times", 36, COLOR.BLACK, 200, 200)
+		#self.textVolume = Text()
+		#self.textVolume.createStaticText("Volume:", "times", 36, COLOR.BLACK, 200, 400)
 		self.textStrFade = Text()
-		self.textStrFade.createStaticText("Fade:", "times", 36, COLOR.BLACK, 200, 600)
+		self.textStrFade.createStaticText("Fade-out:", "times", 30, COLOR.DARKRED, 494+78+204+204, 573+60)
 		self.textNotes = Text()
 		self.textNotes.createStaticText("Notes:", "times", 36, COLOR.BLACK, 200, 800)
-		self.textCurrentSamples = Text()
-		self.textCurrentSamples.createText("text", "times", 36, COLOR.BLACK)
-		self.textCurrentVolume = Text()
-		self.textCurrentVolume.createText("text", "times", 36, COLOR.BLACK)
+		#self.textCurrentSamples = Text()
+		#self.textCurrentSamples.createText("text", "times", 36, COLOR.BLACK)
+		#self.textCurrentVolume = Text()
+		#self.textCurrentVolume.createText("text", "times", 36, COLOR.BLACK)
 		self.textCurrentStrFade = Text()
-		self.textCurrentStrFade.createText("text", "times", 36, COLOR.BLACK)
+		self.textCurrentStrFade.createText("text", "times", 24, COLOR.BLACK)
 		self.textCurrentNotes = Text()
 		self.textCurrentNotes.createText("text", "times", 36, COLOR.BLACK)
 		
@@ -201,6 +209,8 @@ class GameWindow(Window):
 		#Области
 		self.volumeFillSurface = pygame.Surface((146, 146))
 		self.volumeFillSurface.set_colorkey((0, 0, 0))
+		self.fadeFillSurface = pygame.Surface((146, 146))
+		self.fadeFillSurface.set_colorkey((0, 0, 0))
 		
 		#Изменения меню
 		if self.isChangeInstrument:
@@ -217,20 +227,20 @@ class GameWindow(Window):
 			for i in range(1, 21):
 				self.snd[i] = Sound(str(i), self.sfx)
 				self.snd[i].setVolume(self.volumeSnd)
-			self.instrumentImage.createStaticImage(494+78, 573+78, "center", self.sfx, "options")
-			self.textCurrentSamples.createText(self.sfx, "times", 36, COLOR.BLACK)
+			self.instrumentImage.createStaticImage(494+78, 573+78, "center", self.sfx, "instruments")
+			#self.textCurrentSamples.createText(self.sfx, "times", 36, COLOR.BLACK)
 			self.isChangeInstrument = 0
 		
 		#Изменение громкости
 		if self.isChangeVolumeSfx:
 			for i in range(1, 21):
 				self.snd[i].setVolume(self.volumeSnd)
-			self.textCurrentVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
+			#self.textCurrentVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
 			self.isChangeVolumeSfx = 0
 		
 		#Изменение fade
 		if self.isChangeStrFade:
-			self.textCurrentStrFade.createText(self.strFade, "times", 36, COLOR.BLACK)
+			self.textCurrentStrFade.createText(self.strFade, "times", 30, COLOR.DARKRED)
 			self.isChangeStrFade = 0
 		
 		#Изменение нот
@@ -246,7 +256,8 @@ class GameWindow(Window):
 				#self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
 				self.notesImage.createStaticImage(960, 5, "top", str(self.numNotesPage), self.notes, "notes")
 				self.isShowNotesPage = 1
-			self.textCurrentNotes.createText(self.notes, "times", 36, COLOR.BLACK)
+			self.notesFrameImage.createStaticImage(494+78+204+204+204, 573+78, "center", self.notes, self.notes, "notes")
+			self.textCurrentNotes.createText(self.notes, "times", 24, COLOR.BLACK)
 			self.isChangeNotes = 0
 			self.isChangeNotesPage = 0
 		
@@ -259,27 +270,34 @@ class GameWindow(Window):
 				self.isChangeNotesPage = 0
 		
 		#Изменение положения фрейма
-		self.frameImage.changeRectImage(494+78 + 170*(self.numNavigation-1), 573+78, pos="center")
+		self.frameImage.changeRectImage(494+78 + 204*(self.numNavigation-1), 573+78, pos="center")
 		
 		#Отрисовка изображений/текста
 		self.backgroundGameImage.showStaticImage()
 		if self.isShowNotesPage:
 			self.notesImage.showStaticImage()
 		self.pianoImage.showStaticImage()
-		self.instrumentImage.showStaticImage()
-		self.textSamples.showStaticText()
-		self.textVolume.showStaticText()
-		self.textStrFade.showStaticText()
-		self.textNotes.showStaticText()
-		self.textCurrentSamples.showText(200, 250)
-		self.textCurrentVolume.showText(200, 450)
-		self.textCurrentStrFade.showText(200, 650)
-		self.textCurrentNotes.showText(200, 850)
 		
 		self.volumeFill.changeRectImage(0, (100-self.volumeSnd)*1.5, "topleft")
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
-		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (494+5+170, 573+5))
+		self.fadeFill.changeRectImage(0, (2000-self.strFade)*0.075, "topleft")
+		self.fadeFillSurface.blit(self.fadeFill.image, self.fadeFill.rect)
+		OPTIONS.getReg("surf_main").blit(self.volumeFillSurface, (494+5+204, 573+5))
+		OPTIONS.getReg("surf_main").blit(self.fadeFillSurface, (494+5+204+204, 573+5))
 		self.volumeFrame.showStaticImage()
+		self.fadeFrame.showStaticImage()
+		
+		self.instrumentImage.showStaticImage()
+		self.notesFrameImage.showStaticImage()
+		#self.textSamples.showStaticText()
+		#self.textVolume.showStaticText()
+		self.textStrFade.showStaticText()
+		self.textNotes.showStaticText()
+		#self.textCurrentSamples.showText(200, 250)
+		#self.textCurrentVolume.showText(200, 450)
+		self.textCurrentStrFade.showText(494+78+204+204, 573+96)
+		if self.numNotes > 0:
+			self.textCurrentNotes.showText(960, 20)
 		
 		self.frameImage.showStaticImage()
 		
