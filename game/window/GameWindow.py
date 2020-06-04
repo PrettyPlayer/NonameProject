@@ -137,9 +137,11 @@ class GameWindow(Window):
 		
 		#Создание переменных с изображениями
 		self.backgroundGameImage = Image()
-		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage", "backgroundgame")
+		#self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage", "backgroundgame")
+		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage2", "backgroundgame")
 		self.pianoImage = Image()
-		self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
+		#self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
+		self.pianoImage.createStaticImage(960, 1075, "bottom", "Piano2", "piano")
 		self.imgPressedKey = {}
 		self.volumeFrame = Image()
 		self.volumeFrame.createStaticImage(1700, 600, "center", "volumeFrame", "options")
@@ -236,7 +238,8 @@ class GameWindow(Window):
 					self.notes = "Samidare"
 				self.numNotesPage = 1
 				self.notesImage = Image()
-				self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				#self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				self.notesImage.createStaticImage(960, 5, "top", str(self.numNotesPage), self.notes, "notes")
 				self.isShowNotesPage = 1
 			self.textCurrentNotes.createText(self.notes, "times", 36, COLOR.BLACK)
 			self.isChangeNotes = 0
@@ -246,7 +249,8 @@ class GameWindow(Window):
 		if self.isChangeNotesPage and self.numNotes != 0:
 			if self.numNotesPage < self.pagesOfNotes[self.numNotes]:
 				self.numNotesPage += 1
-				self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				#self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
+				self.notesImage.createStaticImage(960, 5, "top", str(self.numNotesPage), self.notes, "notes")
 				self.isChangeNotesPage = 0
 		
 		#Отрисовка изображений/текста

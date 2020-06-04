@@ -20,7 +20,7 @@ class Image(pygame.sprite.Sprite):
 				try:
 					self.image = pygame.image.load(os.path.realpath("img\\" + str(name) + ".png")).convert_alpha()
 				except:
-					self.image = pygame.image.load(os.path.realpath("img\\" + path + str(name) + ".jpeg")).convert_alpha()
+					self.image = pygame.image.load(os.path.realpath("img\\" + path + "\\" + str(name) + ".jpg")).convert_alpha()
 	def scaleImage(self, sizeX=1, sizeY=1):
 		self.image = pygame.transform.scale(self.image, (round(self.image.get_width()*self.changeSizeX(sizeX)), round(self.image.get_height()*self.changeSizeY(sizeY))))
 	
