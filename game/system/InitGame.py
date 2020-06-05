@@ -25,7 +25,7 @@ class InitGame(object):
 	
 	def initWindow(self):
 		pygame.init()
-		pygame.display.set_icon(pygame.image.load(os.path.realpath("img\\papich\\2.png")))
+		pygame.display.set_icon(pygame.image.load(os.path.realpath("img\\icon.png")))
 		pygame.display.set_caption("Noname")
 	
 	
