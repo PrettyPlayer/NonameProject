@@ -35,6 +35,10 @@ class GameWindow(Window):
 				#Игра во весь экран
 				if event.key == pygame.K_RETURN:
 					self.changeFullscreen()
+				#Звук на нажатие клавиши ударных
+				if 256 < event.key < 266:
+					self.sndDrum[event.key-256].playSnd()
+					self.isPressedKeyDictDrum[event.key-256] = 1
 				#Звук на нажатие клавиши синтезатора
 				if event.key in self.eventKeyDict.keys():
 					self.snd[self.eventKeyDict[event.key]].playSnd()
@@ -95,7 +99,6 @@ class GameWindow(Window):
 				elif event.key == pygame.K_LEFT:
 					if 1 < self.numNavigation:
 						self.numNavigation -= 1
-				print(self.strFade)
 			
 			#Отпускание клавиши
 			if event.type == pygame.KEYUP:
@@ -106,6 +109,8 @@ class GameWindow(Window):
 					if self.isPressedKeyDict[self.eventKeyDict[event.key]] == 1 and self.fadeSnd == 1:
 						self.snd[self.eventKeyDict[event.key]].stopSnd(self.strFade)
 						self.isPressedKeyDict[self.eventKeyDict[event.key]] = 0
+				if 256 < event.key < 266:
+					self.isPressedKeyDictDrum[event.key-256] = 0
 			
 	def preInit(self):
 		#Создание переменных/словарей
@@ -121,6 +126,7 @@ class GameWindow(Window):
 		self.isChangeNotes = 1
 		self.pianoScale = 0.648
 		self.snd = {}
+		self.sndDrum = {}
 		self.textWhite = {}
 		self.textBlack = {}
 		
@@ -128,6 +134,7 @@ class GameWindow(Window):
 		self.pagesOfNotes = {1: 5}
 		self.dirPosBlackText = {12: 0, 13: 100, 14: 153, 15: 101, 16: 151, 17: 97, 18: 98, 19: 150, 20: 103}
 		self.isPressedKeyDict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0}
+		self.isPressedKeyDictDrum = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
 		self.imgPressedKeyDict = {1: "6", 2: "7", 3: "1", 4: "2", 5: "3", 6: "4", 7: "5", 8: "6", 9: "7", 10: "1", 11: "2", 12: "black", 13: "black", 14: "black", 15: "black", 16: "black", 17: "black", 18: "black", 19: "black", 20: "black"}
 		#self.widthPressedKeyDict = {1: 69, 2: 155, 3: 242, 4: 327, 5: 413, 6: 499, 7: 585, 8: 670, 9: 756, 10: 842, 11: 927, 12: 26, 13: 125, 14: 277, 15: 379, 16: 530, 17: 627, 18: 726, 19: 877, 20: 979}
 		self.widthPressedKeyDict = {1: 69, 2: 155, 3: 241, 4: 327, 5: 412, 6: 499, 7: 584, 8: 670, 9: 755, 10: 841, 11: 927, 12: 26, 13: 125, 14: 278, 15: 379, 16: 530, 17: 627, 18: 726, 19: 877, 20: 979}
@@ -143,8 +150,11 @@ class GameWindow(Window):
 		self.backgroundGameImage.createStaticImage(960, 540, "center", "backgroundgameimage2", "backgroundgame")
 		self.pianoImage = Image()
 		#self.pianoImage.createStaticImage(960, 1080, "bottom", "Piano", "backgroundgame")
-		self.pianoImage.createStaticImage(960, 1075, "bottom", "Piano2", "piano")
+		self.pianoImage.createStaticImage(960, 1075, "bottom", "Piano3", "piano")
+		self.drumImage = Image()
+		self.drumImage.createStaticImage(self.pianoImage.rect[0] + 846, self.pianoImage.rect[1] + 355, "center", "drumBlue", "drum")
 		self.imgPressedKey = {}
+		self.imgPressedKeyDrum = {}
 		
 		self.frameImage = Image()
 		self.frameImage.createImage("frameRed", "options")
@@ -187,6 +197,15 @@ class GameWindow(Window):
 		for i in range(12, 21):
 			self.imgPressedKey[i] = Image()
 			self.imgPressedKey[i].createStaticImage(self.pianoImage.rect[0] + self.widthPressedKeyDict[i] * self.pianoScale + 30, self.pianoImage.rect[1] + 312, "center", self.imgPressedKeyDict[i], "piano")
+		self.changeWidthDrum = 12
+		self.sizeDrumImage = 85
+		#Красные квадраты на синих
+		z = 1
+		for i in range(2, -1, -1):
+			for j in range(0, 3):
+				self.imgPressedKeyDrum[z] = Image()
+				self.imgPressedKeyDrum[z].createStaticImage(self.drumImage.rect[0] + self.sizeDrumImage * j + self.changeWidthDrum * j, self.drumImage.rect[1] + self.sizeDrumImage * i + self.changeWidthDrum * i, "topleft", "drum", "drum")
+				z+=1
 		
 		#Создание словарей текста
 		#self.startPosText = 530
@@ -203,7 +222,11 @@ class GameWindow(Window):
 			self.changePosText += self.dirPosBlackText[i]
 			self.textBlack[i] = Text()
 			self.textBlack[i].createStaticText(self.textDict[i], "times", 24, COLOR.WHITE, self.startPosText + self.changePosText * self.pianoScale, self.pianoImage.rect[1] + 390)
-			
+		
+		#Загрузка звуков ударных
+		for i in range(1, 10):
+			self.sndDrum[i] = Sound(str(i), "Drum")
+			self.sndDrum[i].setVolume(self.volumeSnd)
 		
 	def postInit(self):
 		#Области
@@ -236,6 +259,8 @@ class GameWindow(Window):
 			for i in range(1, 21):
 				self.snd[i].setVolume(self.volumeSnd)
 			#self.textCurrentVolume.createText(self.volumeSnd, "times", 36, COLOR.BLACK)
+			for i in range(1, 10):
+				self.sndDrum[i].setVolume(self.volumeSnd)
 			self.isChangeVolumeSfx = 0
 		
 		#Изменение fade
@@ -277,6 +302,7 @@ class GameWindow(Window):
 		if self.isShowNotesPage:
 			self.notesImage.showStaticImage()
 		self.pianoImage.showStaticImage()
+		self.drumImage.showStaticImage()
 		
 		self.volumeFill.changeRectImage(0, (100-self.volumeSnd)*1.5, "topleft")
 		self.volumeFillSurface.blit(self.volumeFill.image, self.volumeFill.rect)
@@ -307,6 +333,9 @@ class GameWindow(Window):
 				self.isPressedKeyDict[i] = 0
 			if self.isPressedKeyDict[i] == 1:
 				self.imgPressedKey[i].showStaticImage()
+		for i in range(1, 10):
+			if self.isPressedKeyDictDrum[i] == 1:
+				self.imgPressedKeyDrum[i].showStaticImage()
 		
 		for i in range(1, 12):
 			self.textWhite[i].showStaticText()
