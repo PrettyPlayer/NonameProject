@@ -26,6 +26,18 @@ class GameWindow(Window):
 			if event.type == pygame.QUIT:
 				self.exit()
 			
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				if pygame.mouse.get_pressed() == (1, 0, 0):
+					if self.volumeFrame.rect[0] < pygame.mouse.get_pos()[0] < (self.volumeFrame.rect[0] + self.volumeFrame.rect[2]) and self.volumeFrame.rect[1] < pygame.mouse.get_pos()[1] < (self.volumeFrame.rect[1] + self.volumeFrame.rect[3]) and self.eggActive == 0:
+						if self.eggTimer == 0:
+							self.eggTimer = 100
+							self.eggCounter = 0
+						if self.eggTimer != 0:
+							self.eggCounter += 1
+						if self.eggCounter == 10:
+							self.eggActive = 1
+							self.eggSnd.playSnd()
+							self.numInstrumentMax += 2
 			#Нажатие клавиши
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_LSHIFT:
@@ -47,7 +59,7 @@ class GameWindow(Window):
 				if event.key == pygame.K_UP:
 					if self.numNavigation == 1:
 						#Выбор инструмента (Вверх)
-						if self.numInstrument < 5:
+						if self.numInstrument < self.numInstrumentMax:
 							self.numInstrument += 1
 							self.isChangeInstrument = 1
 					elif self.numNavigation == 2:
@@ -116,14 +128,22 @@ class GameWindow(Window):
 		#Создание переменных/словарей
 		self.numNavigation = 1
 		self.numInstrument = 1
+		self.numInstrumentMax = 3
 		self.fadeSnd = 1
 		self.strFade = 100
 		self.volumeSnd = 100
 		self.numNotes = 0
+		
 		self.isChangeInstrument = 1
 		self.isChangeVolumeSfx = 1
 		self.isChangeStrFade = 1
 		self.isChangeNotes = 1
+		
+		self.eggTimer = 0
+		self.eggCounter = 0
+		self.eggActive = 0
+		self.eggSnd = Sound("eggActive", "egg")
+		
 		self.pianoScale = 0.648
 		self.snd = {}
 		self.sndDrum = {}
@@ -341,5 +361,8 @@ class GameWindow(Window):
 			self.textWhite[i].showStaticText()
 		for i in range(12, 21):
 			self.textBlack[i].showStaticText()
+		
+		if self.eggTimer != 0:
+			self.eggTimer -= 1
 		
 		pygame.display.update()
