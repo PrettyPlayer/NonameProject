@@ -76,7 +76,7 @@ class GameWindow(Window):
 							self.isChangeStrFade = 1
 					elif self.numNavigation == 4:
 						#Выбор нот (Вверх)
-						if self.numNotes < 1:
+						if self.numNotes < 2:
 							self.numNotes += 1
 							self.isChangeNotes = 1
 				#Изменение пункта меню (Вниз)
@@ -151,7 +151,7 @@ class GameWindow(Window):
 		self.textBlack = {}
 		
 		#Заполнение словарей
-		self.pagesOfNotes = {1: 5}
+		self.pagesOfNotes = {1: 5, 2: 2}
 		self.dirPosBlackText = {12: 0, 13: 100, 14: 153, 15: 101, 16: 151, 17: 97, 18: 98, 19: 150, 20: 103}
 		self.isPressedKeyDict = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0, 13: 0, 14: 0, 15: 0, 16: 0, 17: 0, 18: 0, 19: 0, 20: 0}
 		self.isPressedKeyDictDrum = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0}
@@ -296,6 +296,8 @@ class GameWindow(Window):
 			else:
 				if self.numNotes == 1:
 					self.notes = "Samidare"
+				elif self.numNotes == 2:
+					self.notes = "Shreksophone"
 				self.numNotesPage = 1
 				self.notesImage = Image()
 				#self.notesImage.createStaticImage(960, 47, "top", str(self.numNotesPage), self.notes, "notes")
