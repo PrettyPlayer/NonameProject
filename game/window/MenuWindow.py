@@ -43,22 +43,22 @@ class MenuWindow(Window):
 		# createImage: name, path=None, sizeX=1, sizeY=1
 		self.backgroundMenuImage = Image()
 		self.backgroundMenuImage.createStaticImage(960, 540, "center",
-		                    "backgroundmenuimage", "backgroundmenu\\")
+		                    "backgroundmenuimage", "backgroundmenu")
 		
 		#self.backgroundMenuPapichImage = Image()
 		#self.backgroundMenuPapichImage.createStaticImage(650-480, 1080, "bottomleft",
 		#                         "backgroundmenupapich", "backgroundmenu\\", 1.2, 1.2)
 		self.backgroundMenuEpifImage = Image()
 		self.backgroundMenuEpifImage.createStaticImage(0, 1080, "bottomleft",
-		                         "4", "backgroundmenu\\", 1.8, 1.8)
+		                         "4", "backgroundmenu", 1.8, 1.8)
 		
 		self.backgroundMenuPahomImage = Image()
 		self.backgroundMenuPahomImage.createStaticImage(1750, 800, "bottomright",
-		                         "2.1", "backgroundmenu\\", 1.1, 1.1)
+		                         "2.1", "backgroundmenu", 1.1, 1.1)
 		
 		self.backgroundMenuBlackImage = Image()
 		self.backgroundMenuBlackImage.createStaticImage(960, 540, "center",
-		                         "backgroundmenublack", "backgroundmenu\\")
+		                         "backgroundmenublack", "backgroundmenu")
 		
 		self.fog = Fog()
 		self.fog.createImage("fog", "backgroundmenu\\")
