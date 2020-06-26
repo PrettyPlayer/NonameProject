@@ -133,7 +133,7 @@ sfx1=pygame.mixer.Sound("sfx//1.wav")
 sfx2=pygame.mixer.Sound("sfx//2.wav")
 run=False
 while True:
-	text0.show("Проебано времени:", 10, 10, CYAN)
+	text0.show("Потрачено времени:", 10, 10, CYAN)
 	text1.show(time[0][0], 40, 50, CYAN)
 	text2.show(time[0][1], 130, 50, CYAN)
 	text3.show(time[1][0], 40, 80, CYAN)

@@ -40,6 +40,8 @@ class GameWindow(Window):
 							self.numInstrumentMax += 2
 			#Нажатие клавиши
 			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_ESCAPE:
+					self.exit()
 				if event.key == pygame.K_LSHIFT:
 					self.fadeSnd = 0
 				if event.key == pygame.K_SPACE:
@@ -130,7 +132,7 @@ class GameWindow(Window):
 		self.numInstrument = 1
 		self.numInstrumentMax = 3
 		self.fadeSnd = 1
-		self.strFade = 100
+		self.strFade = 300
 		self.volumeSnd = 100
 		self.numNotes = 0
 		
